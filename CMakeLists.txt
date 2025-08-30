@@ -1,4 +1,3 @@
-# 标题
 cmake_minimum_required(VERSION 3.10.0)
 project(GhostEscape VERSION 0.1.0 LANGUAGES C CXX)
 
@@ -11,22 +10,29 @@ if (MSVC)
     add_compile_options(/W4)
 else()
     add_compile_options(-Wall -Wextra -Wpedantic)
+    # Linux 下链接 SDL3 可能需要的线程/数学库
+    if (UNIX)
+        link_libraries(-pthread -lm)
+    endif()
 endif()
 
-# 设置编译输出目录
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
+# 设置编译输出目录（建议用 build/ 分离，避免污染源文件）
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
 
 set(TARGET ${PROJECT_NAME}-${CMAKE_SYSTEM_NAME})
 
-# 查找并载入Cmake预设
+# 手动指定 SDL3 路径（若为手动编译）
+# set(SDL3_DIR "/path/to/SDL3/cmake")  # 取消注释并替换路径
+
+# 查找库（确保 .pc 文件或 cmake 配置正确）
 find_package(SDL3 REQUIRED)
 find_package(SDL3_image REQUIRED)
 find_package(SDL3_mixer REQUIRED)
 find_package(SDL3_ttf REQUIRED)
 find_package(glm REQUIRED)
 
-# 设置通用源文件
+# 通用源文件
 set(SOURCES
     src/core/game.cpp
     src/core/asset_store.cpp
@@ -60,26 +66,30 @@ set(SOURCES
     src/scene_main.cpp
 )
 
-# 根据平台向"通用源文件"追加平台专属的文件
+# 平台专属文件
 if(WIN32)
-    # 如果是 Windows 平台, 将资源文件追加到源文件列表
     list(APPEND SOURCES resources.rc)
+elseif(APPLE)
+    # macOS 可能需要 Info.plist 或其他资源
+    set(MACOSX_BUNDLE TRUE)
+    set(MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/Info.plist)
+elseif(UNIX)
+    # Linux 无需额外资源文件
 endif()
-# TODO: MacOS 和 Linux 平台
 
-# 添加可执行文件, 使用配置好的 "SOURCES" 变量
+# 生成可执行文件
 add_executable(${TARGET} ${SOURCES})
 
-# 链接库
+# 链接库（确保目标正确）
 target_link_libraries(${TARGET}
-                        ${SDL3_LIBRARIES}
-                        SDL3_image::SDL3_image
-                        SDL3_mixer::SDL3_mixer
-                        SDL3_ttf::SDL3_ttf
-                        glm::glm
-                        )
+    SDL3::SDL3
+    SDL3_image::SDL3_image
+    SDL3_mixer::SDL3_mixer
+    SDL3_ttf::SDL3_ttf
+    glm::glm
+)
 
-# 不要弹出控制台窗口
+# Windows 隐藏控制台
 if (MSVC)
     target_link_options(${TARGET} PRIVATE "/SUBSYSTEM:WINDOWS")
 endif()

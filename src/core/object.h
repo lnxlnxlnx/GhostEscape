@@ -3,7 +3,8 @@
 
 #include "game.h"
 #include "defs.h"
-#include <vector>
+#include <algorithm>  // 必须包含，否则 std::remove 无法识别
+#include <vector>     // 确保包含 vector 头文件（存储 children_ 的容器）
 
 class Object {
     

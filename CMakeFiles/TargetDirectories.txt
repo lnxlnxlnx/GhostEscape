@@ -1,0 +1,3 @@
+/home/lnx/program_study/little_project/GhostEscape_lnx/CMakeFiles/GhostEscape-Linux.dir
+/home/lnx/program_study/little_project/GhostEscape_lnx/CMakeFiles/edit_cache.dir
+/home/lnx/program_study/little_project/GhostEscape_lnx/CMakeFiles/rebuild_cache.dir
