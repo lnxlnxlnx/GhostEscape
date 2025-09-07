@@ -6,12 +6,13 @@
 
 class Enemy : public Actor
 {
-protected:
+protected:      //这里可以扩展更多的状态，然后再扩展一下状态机就行(改一下checkState函数)
     enum class State{
         NORMAL,
         HURT,
         DIE
-    };
+    };      //由于State声明在protected区域，它可以被Enemy类自身及它的派生类访问，但不能被外部直接访问。
+
     State current_state_ = State::NORMAL;
     
     Player* target_ = nullptr;

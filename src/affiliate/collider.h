@@ -7,7 +7,10 @@ class Spell;
 class Collider : public ObjectAffiliate
 {
 protected:
-    //  友元
+    //  友元        
+    /* 
+    如果在类 A 中声明friend Spell;，则Spell类的所有成员函数都可以直接访问类 A 的私有成员和保护成员，就像这些成员是Spell类自己的成员一样。
+    */
     friend Spell;
     enum class Type{
         CIRCLE,         // size_ 的 x 轴为直径, 默认 y=x;

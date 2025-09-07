@@ -57,7 +57,7 @@ void Player::clean()
 void Player::takeDamage(float damage)
 {
     if (!stats_ || stats_->getInvincible()) return;
-    Actor::takeDamage(damage);
+    Actor::takeDamage(damage);      //这里的damage可以不用写死，后续还可以扩展暴击功能
     game_.playSound("assets/sound/hit-flesh-02-266309.mp3");
 }
 

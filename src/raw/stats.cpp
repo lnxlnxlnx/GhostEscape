@@ -1,5 +1,8 @@
 #include "stats.h"
 
+/* 
+这个方法创建一个新的Stats对象，设置其属性，并将其添加为父Actor的子对象。注意这里我们将组件的初始生命值设置为最大生命值，魔法值也是如此，这确保了角色初始状态是满血满魔的。
+ */
 Stats *Stats::addStatsChild(Actor *parent, float max_health, float max_mana, float damage, float mana_regen)
 {
     Stats *stats = new Stats();
