@@ -67,7 +67,23 @@ void Player::move(float dt)
 void Player::syncCamera(float dt)
 {
     //game_.getCurrentScene()->setCameraPosition(position_ - game_.getScreenSize() / 2.0f);
-    float smoothing_factor = 3.0f;                                     // 平滑因子，值越小越平滑
+    float dead_zone_percentage = 0.5f;
+    float dead_zone_width = game_.getScreenSize().x * dead_zone_percentage;
+    float dead_zone_height = game_.getScreenSize().y * dead_zone_percentage;
+    SDL_FRect dead_zone = {
+        static_cast<float>(game_.getCurrentScene()->getCameraPos().x + dead_zone_width / 2.0f),
+        static_cast<float>(game_.getCurrentScene()->getCameraPos().y + dead_zone_height / 2.0f),
+        static_cast<float>(dead_zone_width),
+        static_cast<float>(dead_zone_height)
+    };
+
+    SDL_FPoint position = { static_cast<float>(getPosition().x), static_cast<float>(getPosition().y) };
+    if (SDL_PointInRectFloat(&position, &dead_zone)) {
+        return; // 玩家在死区内，不移动摄像机
+    }
+
+
+    float smoothing_factor = 1.3f;                                     // 平滑因子，值越小越平滑
     auto target_camera_pos = position_ - game_.getScreenSize() / 2.0f;
     auto current_camera_pos = game_.getCurrentScene()->getCameraPos();
     auto new_camera_pos = current_camera_pos + (target_camera_pos - current_camera_pos) * smoothing_factor * dt; // 平滑移动摄像机
