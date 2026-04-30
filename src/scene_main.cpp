@@ -32,6 +32,9 @@ void SceneMain::handleEvents(SDL_Event &event)
             SDL_Log("Zoom: %f", camera_zoom_);
             break;
         }
+        case SDLK_SPACE:
+            cameraShake(10.0f, 1.0f);
+            break;
         default:
             break;
         }
@@ -51,8 +54,24 @@ void SceneMain::updateCamera(float dt, glm::vec2 target_pos)
     camera_pos_ += (target_pos - camera_pos_) * smoothing_factor * dt; // 平滑移动摄像机
     // 限制摄像机在世界范围内
     camera_pos_ = glm::clamp(camera_pos_, glm::vec2(0), world_size_ - game_.getScreenSize());
+    if (shake_time_ > 0.0f)
+    {
+        updateCameraShake(dt);
+    }
 }
 
+void SceneMain::updateCameraShake(float dt)
+{
+    shake_time_ -= dt;
+    float shake_offset_x = (rand() / (float)RAND_MAX - 0.5f) * 2.0f * shake_power_;
+    float shake_offset_y = (rand() / (float)RAND_MAX - 0.5f) * 2.0f * shake_power_;
+    camera_pos_ += glm::vec2(shake_offset_x, shake_offset_y);
+    shake_power_ *= shake_decay_; // 振动衰减
+    if (shake_power_ < 0.1f)
+    {
+        shake_time_ = 0.0f;
+    }
+}
 void SceneMain::render()
 {
     // 设置缩放因子
@@ -71,4 +90,10 @@ void SceneMain::renderBackground()
     auto end = world_size_ - camera_pos_;
     game_.drawGrid(start, end, 80.0f, {0.5, 0.5, 0.5, 1.0});
     game_.drawBoundary(start, end, 5.0f, {0.5, 0.5, 0.5, 1.0});
+}
+
+void SceneMain::cameraShake(float power, float duration)
+{
+    shake_power_ = power;
+    shake_time_ = duration;
 }

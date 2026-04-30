@@ -7,6 +7,12 @@ class SceneMain: public Scene
     glm::vec2 world_size_ = glm::vec2(0); // 世界大小
     float camera_zoom_ = 1.0f; // 摄像机缩放
 
+    // 相机振动
+    float shake_power_ = 5.0f;
+    float shake_time_ = 1.0f;
+    float shake_decay_ = 0.90f;
+
+
 public:
     SceneMain() = default;
     virtual ~SceneMain() = default;
@@ -15,11 +21,13 @@ public:
     virtual void handleEvents(SDL_Event& event) override;
     virtual void update(float dt) override;
     void updateCamera(float dt, glm::vec2 target_pos);
+    void updateCameraShake(float dt);
     virtual void render() override;
     virtual void clean() override;
 
     // 工具函数
     void renderBackground();
+    void cameraShake(float power, float duration);
 
     //getter and setter
     auto getCameraPos() const { return camera_pos_; }
