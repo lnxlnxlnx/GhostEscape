@@ -43,6 +43,8 @@ public:
     bool setFPS(Uint64 fps);
     auto getScreenSize() const { return screen_size_; }
     auto getRenderer() const { return renderer_; }
+    auto getCurrentScene() const { return current_scene_; }
+    //void changeScene(Scene *new_scene);
 
     // 工具函数
     void drawGrid(const glm::vec2 &top_left, const glm::vec2 &botton_right, float grid_distance, SDL_FColor fcolor);         // 绘制网格
