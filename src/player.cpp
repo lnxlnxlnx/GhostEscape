@@ -19,7 +19,7 @@ void Player::update(float dt)
     //     velocity_ = glm::vec2(0, 0);
     // }
     move(dt);
-    syncCamera();
+    syncCamera(dt);
     updateDash(dt);
 }
 
@@ -48,7 +48,7 @@ void Player::keyboardControl()
     if (currentKeyStates[SDL_SCANCODE_D]){
         temp_velocity.x = max_speed_;
     }
-    if (currentKeyStates[SDL_SCANCODE_SPACE] && !is_dashing_){
+    if (currentKeyStates[SDL_SCANCODE_LSHIFT] && !is_dashing_){
         is_dashing_ = true;
         dash_timer_ = dash_duration_;
         temp_velocity *= 3.0f;
@@ -64,9 +64,15 @@ void Player::move(float dt)
     position_ = glm::clamp(position_, glm::vec2(0), game_.getCurrentScene()->getWorldSize());
 }
 
-void Player::syncCamera()
+void Player::syncCamera(float dt)
 {
-    game_.getCurrentScene()->setCameraPosition(position_ - game_.getScreenSize() / 2.0f);
+    //game_.getCurrentScene()->setCameraPosition(position_ - game_.getScreenSize() / 2.0f);
+    float smoothing_factor = 3.0f;                                     // 平滑因子，值越小越平滑
+    auto target_camera_pos = position_ - game_.getScreenSize() / 2.0f;
+    auto current_camera_pos = game_.getCurrentScene()->getCameraPos();
+    auto new_camera_pos = current_camera_pos + (target_camera_pos - current_camera_pos) * smoothing_factor * dt; // 平滑移动摄像机
+
+    game_.getCurrentScene()->setCameraPosition(new_camera_pos);
 }
 
 void Player::updateDash(float dt)

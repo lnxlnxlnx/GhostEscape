@@ -38,12 +38,11 @@ void SceneMain::update(float dt)
     // camera_pos_ += glm::vec2(100.0f, 100.0f) * dt; // 每秒向右下方移动10个单位
     //updateCamera(dt, camera_pos_ + camera_pos_ds);
     player_->update(dt);
+    updateCamera(dt);
 }
 
-void SceneMain::updateCamera(float dt, glm::vec2 target_pos)
+void SceneMain::updateCamera(float dt)
 {
-    float smoothing_factor = 3.0f;                                     // 平滑因子，值越小越平滑
-    camera_pos_ += (target_pos - camera_pos_) * smoothing_factor * dt; // 平滑移动摄像机
     // 限制摄像机在世界范围内
     camera_pos_ = glm::clamp(camera_pos_, glm::vec2(0), world_size_ - game_.getScreenSize());
     if (shake_time_ > 0.0f)

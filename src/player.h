@@ -22,7 +22,7 @@ public:
 
     void keyboardControl();
     void move(float dt);
-    void syncCamera();
+    void syncCamera(float dt);
 
     // 功能函数
     void updateDash(float dt);

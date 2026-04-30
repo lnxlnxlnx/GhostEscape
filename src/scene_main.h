@@ -21,7 +21,7 @@ public:
     virtual void init() override;
     virtual void handleEvents(SDL_Event& event) override;
     virtual void update(float dt) override;
-    void updateCamera(float dt, glm::vec2 target_pos);
+    void updateCamera(float dt);
     void updateCameraShake(float dt);
     virtual void render() override;
     virtual void clean() override;
