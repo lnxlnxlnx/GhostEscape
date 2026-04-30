@@ -41,11 +41,20 @@ static void SDL_ColorLog(void *userdata, int category, SDL_LogPriority priority,
 
 void Game::run()
 {
-    while (is_running_)
-    { 
+    while (is_running_){
+        auto start = SDL_GetTicksNS();  // 纳秒级时间戳
         handleEvents();
-        update(0); // 这里暂时传入0，后续可以计算实际的帧时间
+        update(dt_);  // 使用计算出的dt_更新游戏状态
         render();
+        auto end = SDL_GetTicksNS();
+        auto elapsed = end - start;
+        if (elapsed < frame_delay_){
+            SDL_DelayNS((frame_delay_ - elapsed));  // 纳秒级延迟
+            dt_ = frame_delay_ / 1.0e9;  // 纳秒转换为秒
+        }else{
+            dt_ = elapsed / 1.0e9;  // 纳秒转换为秒
+        }
+        SDL_Log("FPS: %f", 1.0 / dt_);
     }
 }
 
@@ -80,6 +89,8 @@ void Game::init(std::string title, int width, int height)
     }
     // 设置窗口逻辑分辨率
     SDL_SetRenderLogicalPresentation(renderer_, width, height, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+
+    frame_delay_ = 1'000'000'000 / FPS_; // 计算每帧的延迟时间，单位为纳秒
 }
 
 void Game::handleEvents()
@@ -94,6 +105,7 @@ void Game::handleEvents()
 
 void Game::update(float dt)
 {
+    dt_ = dt;
 }
 
 void Game::render()
