@@ -31,11 +31,18 @@ class Game
     Game &operator=(const Game &) = delete;
 
 public:
+    // 暴露外部的方法
     static Game &GetInstance()
     {
         static Game instance;
         return instance;
     }
+
+    auto getFPS() ->decltype(FPS_)
+    {
+        return FPS_;
+    }
+    bool setFPS(Uint64 fps);
 
     void run();                                          // 运行游戏, 执行游戏主循环
     void init(std::string title, int width, int height); // 初始化游戏

@@ -39,6 +39,23 @@ static void SDL_ColorLog(void *userdata, int category, SDL_LogPriority priority,
     printf("%s%s\033[0m\n", color, message);
 }
 
+bool Game::setFPS(Uint64 fps)
+{
+    if (fps <= 29)
+    {
+        SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "设置的FPS过低，可能会导致游戏体验不佳: %llu\n", fps);
+        return false;
+    }
+    else if (fps > 181)
+    {
+        SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "设置的FPS过高，可能会导致性能问题: %llu\n", fps);
+        return false;
+    }
+    FPS_ = fps;
+    frame_delay_ = 1'000'000'000 / FPS_;
+    return true;
+}
+
 void Game::run()
 {
     while (is_running_)
@@ -120,9 +137,16 @@ void Game::handleEvents()
             case SDLK_ESCAPE:
                 is_running_ = false;
                 break;
+            case SDLK_1:
+                setFPS(90); // 切换到90 FPS
+                break;
+            case SDLK_2:
+                setFPS(30); // 切换到30 FPS
+                break;
             default:
                 break;
             }
+            break;
         default:
             current_scene_->handleEvents(event);
             break;
