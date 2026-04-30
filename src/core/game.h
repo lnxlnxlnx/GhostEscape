@@ -8,6 +8,7 @@
 #include <string>
 
 class Scene; // 前向声明
+class AssetStore;
 class Game
 {
     glm::vec2 screen_size_ = glm::vec2(0); // 屏幕大小
@@ -23,6 +24,7 @@ class Game
 
     // 当前场景
     Scene *current_scene_ = nullptr;
+    AssetStore *asset_store_ = nullptr; // 资源管理器，NOTE: 如果不用指针就不能只是前向声明
 
     // 私有构造函数
     Game() {}
@@ -45,6 +47,7 @@ public:
     auto getRenderer() const { return renderer_; }
     auto getCurrentScene() const { return current_scene_; }
     //void changeScene(Scene *new_scene);
+    auto getAssetStore() { return asset_store_; }
 
     // 工具函数
     void drawGrid(const glm::vec2 &top_left, const glm::vec2 &botton_right, float grid_distance, SDL_FColor fcolor);         // 绘制网格

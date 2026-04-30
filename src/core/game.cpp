@@ -1,5 +1,6 @@
 #include "game.h"
 #include "../scene_main.h"
+#include "asset_store.h"
 
 // 自定义彩色日志输出函数
 static void SDL_ColorLog(void *userdata, int category, SDL_LogPriority priority, const char *message)
@@ -144,6 +145,10 @@ void Game::init(std::string title, int width, int height)
     SDL_SetRenderLogicalPresentation(renderer_, width, height, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
     frame_delay_ = 1'000'000'000 / FPS_; // 计算每帧的延迟时间，单位为纳秒
+
+    // 创建资源存储器
+    asset_store_ = new AssetStore(renderer_);
+
     current_scene_ = new SceneMain();
     current_scene_->init();
 }
@@ -202,6 +207,12 @@ void Game::render()
 
 void Game::clean()
 {
+    if (asset_store_)
+    {
+        asset_store_->clean();
+        delete asset_store_;
+        asset_store_ = nullptr;
+    }
     if (current_scene_)
     {
         current_scene_->clean();

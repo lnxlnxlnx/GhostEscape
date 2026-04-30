@@ -34,6 +34,7 @@ add_executable(${TARGET} src/main.cpp
     src/core/scene.cpp
     src/scene_main.cpp
     src/player.cpp
+    src/core/asset_store.cpp
     )
 
 # 链接库
