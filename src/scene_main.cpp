@@ -1,10 +1,14 @@
 #include "scene_main.h"
+#include "player.h"
 
 void SceneMain::init()
 {
     world_size_ = game_.getScreenSize() * 3.0f; // 世界大小是屏幕大小的3倍
     camera_pos_ = glm::vec2(world_size_ / 2.0f);
     // camera_pos_ = glm::vec2(-100.0f);
+    player_ = new Player();
+    player_->init();
+    player_->setPosition(world_size_ / 2.0f);
 }
 
 void SceneMain::handleEvents(SDL_Event &event)
@@ -39,13 +43,15 @@ void SceneMain::handleEvents(SDL_Event &event)
             break;
         }
     }
+    player_->handleEvents(event);
 }
 
 void SceneMain::update(float dt)
 {
-    auto camera_pos_ds = glm::vec2(100.0f, 100.0f); // 每秒向右下方移动10个单位
+    //auto camera_pos_ds = glm::vec2(100.0f, 100.0f); // 每秒向右下方移动10个单位
     // camera_pos_ += glm::vec2(100.0f, 100.0f) * dt; // 每秒向右下方移动10个单位
-    updateCamera(dt, camera_pos_ + camera_pos_ds);
+    //updateCamera(dt, camera_pos_ + camera_pos_ds);
+    player_->update(dt);
 }
 
 void SceneMain::updateCamera(float dt, glm::vec2 target_pos)
@@ -78,10 +84,13 @@ void SceneMain::render()
     setCameraZoom(camera_zoom_);
     SDL_SetRenderScale(game_.getRenderer(), camera_zoom_, camera_zoom_);
     renderBackground();
+    player_->render();
 }
 
 void SceneMain::clean()
 {
+    player_->clean();
+    delete player_;
 }
 
 void SceneMain::renderBackground()

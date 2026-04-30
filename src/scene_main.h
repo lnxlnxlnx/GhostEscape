@@ -2,12 +2,16 @@
 #define A8A185ED_E924_456F_A5CA_E4DF1F95705C
 #include "core/scene.h"
 
+class Player;
 class SceneMain: public Scene
 {
     // 相机振动
     float shake_power_ = 5.0f;
     float shake_time_ = 1.0f;
     float shake_decay_ = 0.90f;
+
+    // 玩家
+    Player* player_ = nullptr; // 玩家
 
 
 public:
