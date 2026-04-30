@@ -22,20 +22,6 @@ void SceneMain::handleEvents(SDL_Event &event)
     case SDL_EVENT_KEY_DOWN:
         switch (event.key.key)
         {
-        case SDLK_W:
-        {
-            auto camera_zoom = camera_zoom_ + 0.01f;
-            setCameraZoom(camera_zoom);
-            SDL_Log("Zoom: %f", camera_zoom_);
-            break;
-        }
-        case SDLK_E:
-        {
-            auto camera_zoom = camera_zoom_ - 0.01f;
-            setCameraZoom(camera_zoom);
-            SDL_Log("Zoom: %f", camera_zoom_);
-            break;
-        }
         case SDLK_SPACE:
             cameraShake(10.0f, 1.0f);
             break;

@@ -15,8 +15,12 @@ void Player::update(float dt)
 {
     keyboardControl();
     velocity_ *= 0.9f;
+    // if (glm::length(velocity_) < 0.1f) {
+    //     velocity_ = glm::vec2(0, 0);
+    // }
     move(dt);
     syncCamera();
+    updateDash(dt);
 }
 
 void Player::render()
@@ -31,18 +35,26 @@ void Player::clean()
 void Player::keyboardControl()
 {
     auto currentKeyStates = SDL_GetKeyboardState(NULL);
+    auto temp_velocity = glm::vec2(velocity_.x, velocity_.y);
     if (currentKeyStates[SDL_SCANCODE_W]){
-        velocity_.y = -max_speed_;
+        temp_velocity.y = -max_speed_;
     }
     if (currentKeyStates[SDL_SCANCODE_S]){
-        velocity_.y = max_speed_;
+        temp_velocity.y = max_speed_;
     }
     if (currentKeyStates[SDL_SCANCODE_A]){
-        velocity_.x = -max_speed_;
+        temp_velocity.x = -max_speed_;
     }
     if (currentKeyStates[SDL_SCANCODE_D]){
-        velocity_.x = max_speed_;
+        temp_velocity.x = max_speed_;
     }
+    if (currentKeyStates[SDL_SCANCODE_SPACE] && !is_dashing_){
+        is_dashing_ = true;
+        dash_timer_ = dash_duration_;
+        temp_velocity *= 3.0f;
+        setMaxSpeed(max_speed_ * 3.0f);
+    }
+    velocity_ = temp_velocity;
 }
 
 void Player::move(float dt)
@@ -55,4 +67,16 @@ void Player::move(float dt)
 void Player::syncCamera()
 {
     game_.getCurrentScene()->setCameraPosition(position_ - game_.getScreenSize() / 2.0f);
+}
+
+void Player::updateDash(float dt)
+{
+    if (is_dashing_) {
+        dash_timer_ -= dt;
+        if (dash_timer_ < 0.0f) {
+            is_dashing_ = false;
+            dash_timer_ = 0.0f;
+            setMaxSpeed(max_speed_ / 3.0f); // 恢复正常速度
+        }
+    }
 }

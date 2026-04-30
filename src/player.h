@@ -8,9 +8,14 @@
 
 class Player : public Actor
 {
+
+    bool is_dashing_ = false;
+    float dash_timer_ = 0.0f;
+    float dash_duration_ = 0.2f;
+
 public:
     virtual void init() override;
-    virtual void handleEvents(SDL_Event& event) override;
+    virtual void handleEvents(SDL_Event &event) override;
     virtual void update(float dt) override;
     virtual void render() override;
     virtual void clean() override;
@@ -18,6 +23,9 @@ public:
     void keyboardControl();
     void move(float dt);
     void syncCamera();
+
+    // 功能函数
+    void updateDash(float dt);
 };
 
 #endif // PLAYER_H
