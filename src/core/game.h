@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 #include <string>
 
+class Scene; // 前向声明
 class Game
 {
     glm::vec2 screen_size_ = glm::vec2(0); // 屏幕大小
@@ -15,9 +16,13 @@ class Game
     SDL_Window *window_ = nullptr;     // 窗口
     SDL_Renderer *renderer_ = nullptr; // 渲染器
 
+    // 帧率控制
     Uint64 FPS_ = 60;        // 游戏帧率
     Uint64 frame_delay_ = 0; // 帧延迟，单位ns
     float dt_ = 0.0f;        // 帧间隔
+
+    // 当前场景
+    Scene *current_scene_ = nullptr;
 
     // 私有构造函数
     Game() {}

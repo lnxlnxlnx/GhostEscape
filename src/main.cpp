@@ -4,7 +4,7 @@
 #include <SDL3_mixer/SDL_mixer.h>
 #include <SDL3_ttf/SDL_ttf.h>
 #include <glm/glm.hpp>
-#include "game.h"
+#include "core/game.h"
 
 int main(int argc, char *argv[]){
     (void)argc; // 未使用参数，避免编译器警告
