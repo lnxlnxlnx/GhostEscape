@@ -38,9 +38,12 @@ public:
         return instance;
     }
 
+    // getter and setter
     auto getFPS() -> decltype(FPS_) { return FPS_; }
     bool setFPS(Uint64 fps);
     auto getScreenSize() const { return screen_size_; }
+    auto getRenderer() const { return renderer_; }
+
     // 工具函数
     void drawGrid(const glm::vec2 &top_left, const glm::vec2 &botton_right, float grid_distance, SDL_FColor fcolor);         // 绘制网格
     void drawBoundary(const glm::vec2 &top_left, const glm::vec2 &botton_right, float boundary_width, SDL_FColor fcolor); // 绘制边界

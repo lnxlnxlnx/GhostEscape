@@ -102,7 +102,7 @@ void Game::run()
         {
             dt_ = elapsed / 1.0e9; // 纳秒转换为秒
         }
-        SDL_Log("FPS: %f", 1.0 / dt_);
+        //SDL_Log("FPS: %f", 1.0 / dt_);
     }
 }
 
@@ -175,9 +175,9 @@ void Game::handleEvents()
             }
             break;
         default:
-            current_scene_->handleEvents(event);
             break;
         }
+        current_scene_->handleEvents(event);
     }
 }
 
