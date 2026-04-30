@@ -43,17 +43,44 @@ bool Game::setFPS(Uint64 fps)
 {
     if (fps <= 29)
     {
-        SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "设置的FPS过低，可能会导致游戏体验不佳: %llu\n", fps);
+        SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "设置的FPS过低，可能会导致游戏体验不佳: %lu\n", fps);
         return false;
     }
     else if (fps > 181)
     {
-        SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "设置的FPS过高，可能会导致性能问题: %llu\n", fps);
+        SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "设置的FPS过高，可能会导致性能问题: %lu\n", fps);
         return false;
     }
     FPS_ = fps;
     frame_delay_ = 1'000'000'000 / FPS_;
     return true;
+}
+
+void Game::drawGrid(const glm::vec2 &top_left, const glm::vec2 &botton_right, float grid_distance, SDL_FColor fcolor)
+{
+    SDL_SetRenderDrawColorFloat(renderer_, fcolor.r, fcolor.g, fcolor.b, fcolor.a);
+    for (float x = top_left.x; x <= botton_right.x; x += grid_distance){
+        SDL_RenderLine(renderer_, x, top_left.y, x, botton_right.y);
+    }
+    for (float y = top_left.y; y <= botton_right.y; y += grid_distance){
+        SDL_RenderLine(renderer_, top_left.x, y, botton_right.x, y);
+    }
+    SDL_SetRenderDrawColorFloat(renderer_, 0, 0, 0, 1);
+}
+
+void Game::drawBoundary(const glm::vec2 &top_left, const glm::vec2 &botton_right, float boundary_width, SDL_FColor fcolor)
+{
+    SDL_SetRenderDrawColorFloat(renderer_, fcolor.r, fcolor.g, fcolor.b, fcolor.a);
+    for (float i = 0; i < boundary_width; i++){
+        SDL_FRect rect = {
+            top_left.x - i,
+            top_left.y - i,
+            botton_right.x - top_left.x + 2 * i,
+            botton_right.y - top_left.y + 2 * i
+        };
+        SDL_RenderRect(renderer_, &rect);
+    }
+    SDL_SetRenderDrawColorFloat(renderer_, 0, 0, 0, 1);
 }
 
 void Game::run()

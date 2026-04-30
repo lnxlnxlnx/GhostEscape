@@ -38,11 +38,12 @@ public:
         return instance;
     }
 
-    auto getFPS() ->decltype(FPS_)
-    {
-        return FPS_;
-    }
+    auto getFPS() -> decltype(FPS_) { return FPS_; }
     bool setFPS(Uint64 fps);
+    auto getScreenSize() const { return screen_size_; }
+    // 工具函数
+    void drawGrid(const glm::vec2 &top_left, const glm::vec2 &botton_right, float grid_distance, SDL_FColor fcolor);         // 绘制网格
+    void drawBoundary(const glm::vec2 &top_left, const glm::vec2 &botton_right, float boundary_width, SDL_FColor fcolor); // 绘制边界
 
     void run();                                          // 运行游戏, 执行游戏主循环
     void init(std::string title, int width, int height); // 初始化游戏
