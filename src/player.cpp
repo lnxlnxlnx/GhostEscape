@@ -48,8 +48,9 @@ void Player::keyboardControl()
     if (currentKeyStates[SDL_SCANCODE_D]){
         temp_velocity.x = max_speed_;
     }
-    if (currentKeyStates[SDL_SCANCODE_LSHIFT] && !is_dashing_){
+    if (currentKeyStates[SDL_SCANCODE_LSHIFT] && !is_dashing_ && dash_cool_down <= 0.0f) {
         is_dashing_ = true;
+        dash_cool_down = 1.0f;
         dash_timer_ = dash_duration_;
         temp_velocity *= 3.0f;
         setMaxSpeed(max_speed_ * 3.0f);
@@ -99,6 +100,12 @@ void Player::updateDash(float dt)
             is_dashing_ = false;
             dash_timer_ = 0.0f;
             setMaxSpeed(max_speed_ / 3.0f); // 恢复正常速度
+        }
+    }
+    if (dash_cool_down > 0.0f) {    
+        dash_cool_down -= dt;
+        if (dash_cool_down < 0.0f) {
+            dash_cool_down = 0.0f;
         }
     }
 }

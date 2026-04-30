@@ -9,9 +9,11 @@
 class Player : public Actor
 {
 
+    // 冲刺相关
     bool is_dashing_ = false;
     float dash_timer_ = 0.0f;
     float dash_duration_ = 0.2f;
+    float dash_cool_down = 0.0f;
 
 public:
     virtual void init() override;
