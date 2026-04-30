@@ -1,0 +1,101 @@
+#include "game.h"
+
+// 自定义彩色日志输出函数
+static void SDL_ColorLog(void *userdata, int category, SDL_LogPriority priority, const char *message)
+{
+    (void)userdata; // 未使用参数，避免编译器警告
+    (void)category; // 未使用参数，避免编译器警告
+    (void)message;  // 未使用参数，避免编译器警告
+    const char *color = "";
+
+    // ANSI 颜色代码（Linux/macOS 通用）
+    switch (priority)
+    {
+    case SDL_LOG_PRIORITY_VERBOSE:
+        color = "\033[90m";
+        break; // 灰色
+    case SDL_LOG_PRIORITY_DEBUG:
+        color = "\033[36m";
+        break; // 青色
+    case SDL_LOG_PRIORITY_INFO:
+        color = "\033[32m";
+        break; // 绿色
+    case SDL_LOG_PRIORITY_WARN:
+        color = "\033[33m";
+        break; // 黄色
+    case SDL_LOG_PRIORITY_ERROR:
+        color = "\033[31m";
+        break; // 红色
+    case SDL_LOG_PRIORITY_CRITICAL:
+        color = "\033[35;1m";
+        break; // 亮紫色
+    default:
+        color = "\033[0m";
+        break; // 默认白色
+    }
+
+    // 输出：颜色 + 信息 + 恢复默认颜色
+    printf("%s%s\033[0m\n", color, message);
+}
+
+
+void Game::run()
+{
+    while (is_running_)
+    { 
+        handleEvents();
+        update(0); // 这里暂时传入0，后续可以计算实际的帧时间
+        render();
+    }
+}
+
+void Game::init(std::string title, int width, int height)
+{
+    screen_size_ = glm::vec2(width, height);
+    SDL_SetLogOutputFunction(SDL_ColorLog, nullptr); // 设置自定义日志输出函数
+    // SDL3初始化
+    if (!SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO)){
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL初始化失败: %s\n", SDL_GetError());
+    }
+    // 不需要进行SDL_image初始化
+    // SDL3_Mixer初始化
+    if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG) != (MIX_INIT_MP3 | MIX_INIT_OGG)){
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_Mixer初始化失败: %s\n", SDL_GetError());
+    }
+    if (!Mix_OpenAudio(0, NULL)){
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_Mixer打开音频失败: %s\n", SDL_GetError());
+    }
+    Mix_AllocateChannels(16); // 分配16个音频通道
+    Mix_VolumeMusic(MIX_MAX_VOLUME / 4); // 设置音乐音量
+    Mix_Volume(-1, MIX_MAX_VOLUME / 4); // 设置音效音量
+
+    // SDL3_TTF初始化
+    if (!TTF_Init()){
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_TTF初始化失败: %s\n", SDL_GetError());
+    }
+    // 创建窗口与渲染器
+    SDL_CreateWindowAndRenderer(title.c_str(), width, height, SDL_WINDOW_RESIZABLE, &window_, &renderer_);
+    if (!window_ || !renderer_){
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "创建窗口或渲染器失败: %s\n", SDL_GetError());
+    }
+    // 设置窗口逻辑分辨率
+    SDL_SetRenderLogicalPresentation(renderer_, width, height, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+}
+
+void Game::handleEvents()
+{
+    SDL_Event event;
+    while (SDL_PollEvent(&event)){
+        if (event.type == SDL_EVENT_QUIT || (event.type == SDL_EVENT_KEY_DOWN && event.key.key == SDLK_ESCAPE)){
+            is_running_ = false;
+        }
+    }
+}
+
+void Game::update(float dt)
+{
+}
+
+void Game::render()
+{
+}
