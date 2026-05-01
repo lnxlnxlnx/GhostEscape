@@ -18,6 +18,9 @@ void Player::init()
     sprite_hp->setOffset(glm::vec2(sprite->getSize().x/2.0f - sprite_hp->getSize().x/2.0f, -sprite_hp->getSize().y/2.0f));
     sprite->setOffset(glm::vec2(0, sprite->getSize().y));
     SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.sprite_idle", "assets/sprite/ghost-idle.png"), 2.0f);
+    auto explosion_sprite = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("test.texture_explosion", "assets/sprite/ghost-idle.png"), 2.0f);
+    explosion_sprite->setPlayMode(SpriteAnimPlayMode::PLAY_PING_PONG);
+
     
 }
 
