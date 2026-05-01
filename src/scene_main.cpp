@@ -1,5 +1,6 @@
 #include "scene_main.h"
 #include "player.h"
+#include "core/asset_store.h"
 
 void SceneMain::init()
 {
@@ -9,6 +10,16 @@ void SceneMain::init()
     player_ = new Player();
     player_->init();
     player_->setPosition(world_size_ / 2.0f);
+
+    // 加载背景音乐
+    game_.getAssetStore()->loadMusic("assets/test/06_Battle_in_Space_Intro.ogg");
+
+    // 播放背景音乐（循环）
+    Mix_Music *backgroundMusic = game_.getAssetStore()->getMusic("assets/test/06_Battle_in_Space_Intro.ogg");
+    if (backgroundMusic)
+    {
+        Mix_PlayMusic(backgroundMusic, -1); // -1表示无限循环
+    }
 }
 
 void SceneMain::handleEvents(SDL_Event &event)
@@ -34,9 +45,9 @@ void SceneMain::handleEvents(SDL_Event &event)
 
 void SceneMain::update(float dt)
 {
-    //auto camera_pos_ds = glm::vec2(100.0f, 100.0f); // 每秒向右下方移动10个单位
-    // camera_pos_ += glm::vec2(100.0f, 100.0f) * dt; // 每秒向右下方移动10个单位
-    //updateCamera(dt, camera_pos_ + camera_pos_ds);
+    // auto camera_pos_ds = glm::vec2(100.0f, 100.0f); // 每秒向右下方移动10个单位
+    //  camera_pos_ += glm::vec2(100.0f, 100.0f) * dt; // 每秒向右下方移动10个单位
+    // updateCamera(dt, camera_pos_ + camera_pos_ds);
     player_->update(dt);
     updateCamera(dt);
 }

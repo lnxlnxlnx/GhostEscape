@@ -138,3 +138,64 @@ TTF_Font *AssetStore::getFont(const std::string &file_path, int font_size)
     }
     return iter->second;
 }
+
+void AssetStore::preloadResources(const std::vector<std::string>& imagePaths, 
+                                  const std::vector<std::string>& soundPaths,
+                                  const std::vector<std::string>& musicPaths)
+{
+    // 加载所有图像
+    for (const auto& path : imagePaths) {
+        loadImage(path);
+    }
+    
+    // 加载所有音效
+    for (const auto& path : soundPaths) {
+        loadSound(path);
+    }
+    
+    // 加载所有音乐
+    for (const auto& path : musicPaths) {
+        loadMusic(path);
+    }
+}
+
+void AssetStore::unloadImage(const std::string& file_path)
+{
+    auto iter = textures_.find(file_path);
+    if (iter != textures_.end()) {
+        SDL_DestroyTexture(iter->second);
+        textures_.erase(iter);
+    }
+}
+
+void AssetStore::unloadSound(const std::string &file_path)
+{
+    auto iter = sounds_.find(file_path);
+    if (iter != sounds_.end()) {
+        Mix_FreeChunk(iter->second);
+        sounds_.erase(iter);
+    }
+}
+
+void AssetStore::unloadMusic(const std::string &file_path)
+{
+    auto iter = music_.find(file_path);
+    if (iter != music_.end()) {
+        Mix_FreeMusic(iter->second);
+        music_.erase(iter);
+    }
+}
+
+void AssetStore::unloadFont(const std::string &file_path)
+{
+    auto iter = fonts_.find(file_path);
+    if (iter != fonts_.end()) {
+        TTF_CloseFont(iter->second);
+        fonts_.erase(iter);
+    }
+}
+
+
+
+
+

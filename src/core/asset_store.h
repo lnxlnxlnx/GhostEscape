@@ -9,6 +9,7 @@
 #include <SDL3_mixer/SDL_mixer.h>
 #include <SDL3_ttf/SDL_ttf.h>
 #include <string>
+#include <vector>
 
 class AssetStore
 {
@@ -37,6 +38,11 @@ public:
     Mix_Chunk* getSound(const std::string& file_path);
     Mix_Music* getMusic(const std::string& file_path);
     TTF_Font* getFont(const std::string& file_path, int font_size);
+    void preloadResources(const std::vector<std::string> &imagePaths, const std::vector<std::string> &soundPaths, const std::vector<std::string> &musicPaths);
+    void unloadImage(const std::string &file_path);
+    void unloadSound(const std::string &file_path);
+    void unloadMusic(const std::string &file_path);
+    void unloadFont(const std::string &file_path);
 };
 
 #endif // ASSET_STORE_H
