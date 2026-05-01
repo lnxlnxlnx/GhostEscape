@@ -1,8 +1,9 @@
 {
     "player": {
-        "texture1": "assets/test/hp.png",
+        "textureHp": "assets/test/hp.png",
         "texture": "assets/test/SpaceShip.png",
-        "texture3": "assets/test/yuki.jpg",
+        "textureYuki": "assets/test/yuki.jpg",
+        "sprite_idle": "assets/sprite/ghost-idle.png",
         "speed": 500.0,
         "size": [80, 80]
     },

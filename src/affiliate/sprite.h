@@ -12,8 +12,8 @@ struct Texture
     float angle = 0;
     bool is_flip = false;
     Texture() = default;
-    //Texture(const std::string& file_path); 
-    Texture(std::string_view file_path); 
+    // Texture(const std::string& file_path);
+    Texture(std::string_view file_path);
 };
 
 // sprite.h
@@ -24,13 +24,15 @@ protected:
 
 public:
     Sprite() = default;
+    static Sprite *addSpriteChild(ObjectScreen *parent, const std::string &file_path, float scale = 1.0f);
+
     virtual void render() override;
 
     // getters and setters
     Texture getTexture() const { return texture_; }
-    void setTexture(const Texture &texture);
+    virtual void setTexture(const Texture &texture);
+    void setFlip(bool flip) { texture_.is_flip = flip; }
+    void setScale(float scale){size_ *= scale;}
 };
-
-
 
 #endif /* E2C96073_6F1C_4907_9EBC_0E1B90C86319 */

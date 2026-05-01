@@ -13,6 +13,17 @@ Texture::Texture(std::string_view file_path)
     }
 }
 
+Sprite *Sprite::addSpriteChild(ObjectScreen *parent, const std::string &file_path, float scale)
+{
+    Sprite *sprite = new Sprite();
+    sprite->init();
+    sprite->setTexture(Texture(file_path));
+    sprite->setScale(scale);
+    sprite->setParent(parent);
+    parent->addChild(sprite);
+    return sprite;
+}
+
 // sprite.cpp
 void Sprite::render()
 {

@@ -3,6 +3,7 @@
 #include "core/scene.h"
 #include "core/asset_store.h"
 #include "affiliate/sprite.h"
+#include "affiliate/sprite_anim.h"
 #include <spdlog/spdlog.h>
 
 void Player::init()
@@ -11,17 +12,13 @@ void Player::init()
     max_speed_ = 500.0f;
 
     // 加载玩家纹理
-    //game_.getAssetStore()->loadImage("assets/test/hp.png");
-    auto sprite = new Sprite();
-    auto sprite_hp = new Sprite();
-    sprite->setTexture(Texture(game_.getConfig()->get<std::string>("player.texture", "assets/test/hp.png")));
-    sprite_hp->setTexture(Texture(game_.getConfig()->get<std::string>("player.texture1", "assets/test/hp.png")));
+    auto sprite = SpriteAnim::addSpriteChild(this, game_.getConfig()->get<std::string>("player.texture", "assets/test/hp.png"));
+    auto sprite_hp = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.textureHp", "assets/test/hp.png"));
     sprite->autoResize();
     sprite_hp->setOffset(glm::vec2(sprite->getSize().x/2.0f - sprite_hp->getSize().x/2.0f, -sprite_hp->getSize().y/2.0f));
-    sprite->setParent(this);
-    addChild(sprite);
-    sprite_hp->setParent(this);
-    addChild(sprite_hp);
+    sprite->setOffset(glm::vec2(0, sprite->getSize().y));
+    SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.sprite_idle", "assets/sprite/ghost-idle.png"), 2.0f);
+    
 }
 
 void Player::handleEvents(SDL_Event &event)

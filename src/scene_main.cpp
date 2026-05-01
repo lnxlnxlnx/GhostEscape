@@ -58,9 +58,9 @@ void SceneMain::update(float dt)
     {
         cameraShake(10.0f, 1.0f);
         time_accumulator = 0.0f;
-        player_->setPaused(!player_->isPaused()); // 每5秒切换玩家的活跃状态
-        spdlog::info("Player active: {}", player_->isActive());
-        spdlog::info("Player paused: {}", player_->isPaused());
+        // player_->setPaused(!player_->isPaused()); // 每5秒切换玩家的活跃状态
+        // spdlog::info("Player active: {}", player_->isActive());
+        // spdlog::info("Player paused: {}", player_->isPaused());
     }
 }
 
