@@ -25,9 +25,13 @@ public:
     static SpriteAnim* addSpriteAnimChild(ObjectScreen* parent, const std::string& file_path, float scale = 1.0f);
     virtual void update(float dt) override;
 
+    // methods
+    void play() { setPaused(false); }
+    void pause() { setPaused(true); }
+    void stop() { setPaused(true); setCurrentFrame(0); finished_ = false; }
+
     // getters and setters
     virtual void setTexture(const Texture &texture) override;
-
     int getCurrentFrame() const { return current_frame_; }
     void setCurrentFrame(int current_frame) { current_frame_ = current_frame; }
     int getTotalFrames() const { return total_frames_; }
