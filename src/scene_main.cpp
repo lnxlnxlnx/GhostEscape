@@ -10,6 +10,7 @@ void SceneMain::init()
     player_ = new Player();
     player_->init();
     player_->setPosition(world_size_ / 2.0f);
+    addChild(player_);
 
     // 加载背景音乐
     game_.getAssetStore()->loadMusic(game_.getConfig()->get<std::string>("background_music"));
@@ -24,6 +25,7 @@ void SceneMain::init()
 
 void SceneMain::handleEvents(SDL_Event &event)
 {
+    Scene::handleEvents(event);
     switch (event.type)
     {
     case SDL_EVENT_MOUSE_WHEEL:
@@ -40,15 +42,14 @@ void SceneMain::handleEvents(SDL_Event &event)
             break;
         }
     }
-    player_->handleEvents(event);
 }
 
 void SceneMain::update(float dt)
 {
+    Scene::update(dt);
     // auto camera_pos_ds = glm::vec2(100.0f, 100.0f); // 每秒向右下方移动10个单位
     //  camera_pos_ += glm::vec2(100.0f, 100.0f) * dt; // 每秒向右下方移动10个单位
     // updateCamera(dt, camera_pos_ + camera_pos_ds);
-    player_->update(dt);
     updateCamera(dt);
 }
 
@@ -76,17 +77,16 @@ void SceneMain::updateCameraShake(float dt)
 }
 void SceneMain::render()
 {
+    Scene::render();
     // 设置缩放因子
     setCameraZoom(camera_zoom_);
     SDL_SetRenderScale(game_.getRenderer(), camera_zoom_, camera_zoom_);
     renderBackground();
-    player_->render();
 }
 
 void SceneMain::clean()
 {
-    player_->clean();
-    delete player_;
+    Scene::clean();
 }
 
 void SceneMain::renderBackground()

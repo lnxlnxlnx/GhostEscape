@@ -5,6 +5,7 @@
 
 void Player::init()
 {
+    Actor::init();
     max_speed_ = 500.0f;
 
     // 加载玩家纹理
@@ -17,11 +18,12 @@ void Player::init()
 
 void Player::handleEvents(SDL_Event &event)
 {
-    (void)event; // 暂时不处理事件，直接在update()里获取键盘状态
+    Actor::handleEvents(event);
 }
 
 void Player::update(float dt)
 {
+    Actor::update(dt);
     keyboardControl();
     velocity_ *= 0.9f;
     // if (glm::length(velocity_) < 0.1f) {
@@ -34,6 +36,7 @@ void Player::update(float dt)
 
 void Player::render()
 {
+    Actor::render();
     auto assetStore = game_.getAssetStore();
     SDL_Texture *playerTexture = assetStore->getImage(game_.getConfig()->get<std::string>("player.texture4", "assets/test/hp.png"));
 
@@ -62,6 +65,7 @@ void Player::render()
 
 void Player::clean()
 {
+    Actor::clean();
 }
 
 void Player::keyboardControl()

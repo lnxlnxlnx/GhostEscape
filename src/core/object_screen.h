@@ -15,6 +15,7 @@ public:
     // getters and stters
     glm::vec2 getRenderPosition() const { return render_position_; }
     virtual void setRenderPosition(const glm::vec2 &render_position) { render_position_ = render_position; }
+    virtual void init() override{ type_ = ObjectType::OBJECT_SCREEN; }
 };
 
 #endif // OBJECT_SCREEN_H

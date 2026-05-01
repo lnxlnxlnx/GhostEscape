@@ -13,10 +13,12 @@ protected:
 
 public:
     virtual void update(float dt) override;
+    virtual void init() override { type_ = ObjectType::OBJECT_WORLD; }
     // getters and stters
     glm::vec2 getPosition() const { return position_; }
     void setPosition(const glm::vec2 &position);
     virtual void setRenderPosition(const glm::vec2 &render_position) override;
+
 };
 
 #endif // OBJECT_WORLD_H
