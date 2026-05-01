@@ -8,14 +8,13 @@
 
 using json = nlohmann::json;
 
-// 为 glm::vec2 提供 JSON 转换支持
+// 为 glm::vec2/vec3/vec4 提供 JSON 转换支持
 namespace nlohmann {
     template <>
     struct adl_serializer<glm::vec2> {
         static void to_json(json& j, const glm::vec2& v) {
             j = json{{"x", v.x}, {"y", v.y}};
         }
-
         static void from_json(const json& j, glm::vec2& v) {
             if (j.is_array() && j.size() >= 2) {
                 v.x = j[0].get<float>();
@@ -34,7 +33,6 @@ namespace nlohmann {
         static void to_json(json& j, const glm::vec3& v) {
             j = json{{"x", v.x}, {"y", v.y}, {"z", v.z}};
         }
-
         static void from_json(const json& j, glm::vec3& v) {
             if (j.is_array() && j.size() >= 3) {
                 v.x = j[0].get<float>();
@@ -55,7 +53,6 @@ namespace nlohmann {
         static void to_json(json& j, const glm::vec4& v) {
             j = json{{"x", v.x}, {"y", v.y}, {"z", v.z}, {"w", v.w}};
         }
-
         static void from_json(const json& j, glm::vec4& v) {
             if (j.is_array() && j.size() >= 4) {
                 v.x = j[0].get<float>();

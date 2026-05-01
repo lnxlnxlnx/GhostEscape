@@ -44,9 +44,6 @@ add_executable(${TARGET} src/main.cpp
     # src/asset_manager.cpp
     )
 
-# 设置包含目录
-target_include_directories(${TARGET} PRIVATE ${CMAKE_SOURCE_DIR}/src)
-
 # 链接库
 target_link_libraries(${TARGET}
                         ${SDL3_LIBRARIES}

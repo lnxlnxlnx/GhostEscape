@@ -13,10 +13,15 @@ void Player::init()
     // 加载玩家纹理
     //game_.getAssetStore()->loadImage("assets/test/hp.png");
     auto sprite = new Sprite();
+    auto sprite_hp = new Sprite();
     sprite->setTexture(Texture(game_.getConfig()->get<std::string>("player.texture", "assets/test/hp.png")));
+    sprite_hp->setTexture(Texture(game_.getConfig()->get<std::string>("player.texture1", "assets/test/hp.png")));
     sprite->autoResize();
+    sprite_hp->setOffset(glm::vec2(sprite->getSize().x/2.0f - sprite_hp->getSize().x/2.0f, -sprite_hp->getSize().y/2.0f));
     sprite->setParent(this);
     addChild(sprite);
+    sprite_hp->setParent(this);
+    addChild(sprite_hp);
 }
 
 void Player::handleEvents(SDL_Event &event)

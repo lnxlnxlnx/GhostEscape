@@ -1,6 +1,6 @@
 #include "sprite.h"
-#include "core/game.h"
-#include "core/asset_store.h"
+#include "../core/game.h"
+#include "../core/asset_store.h"
 #include <spdlog/spdlog.h>
 Texture::Texture(std::string_view file_path)
 {

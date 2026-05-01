@@ -1,7 +1,7 @@
-#include "core/game.h"
-#include "scene_main.h"
-#include "core/asset_store.h"
-#include "affiliate/sprite.h"
+#include "game.h"
+#include "../scene_main.h"
+#include "asset_store.h"
+#include "../affiliate/sprite.h"
 
 // 自定义彩色日志输出函数
 static void SDL_ColorLog(void *userdata, int category, SDL_LogPriority priority, const char *message)
@@ -92,9 +92,27 @@ void Game::drawBoundary(const glm::vec2 &top_left, const glm::vec2 &botton_right
     SDL_SetRenderDrawColorFloat(renderer_, 0, 0, 0, 1);
 }
 
-// game.cpp
+// 带视口裁剪的渲染方法
 void Game::renderTexture(const Texture &texture, const glm::vec2 &position, const glm::vec2 &size)
 {
+    if (!texture.texture)
+    {
+        spdlog::warn("尝试渲染无效的纹理");
+        return;
+    }
+    auto camera_pos = current_scene_->getCameraPos();
+    auto camera_zoom = current_scene_->getCameraZoom();
+    // 视口裁剪：计算对象在屏幕上的位置
+    auto world_pos = getCurrentScene()->screenToWorld(position);
+    glm::vec2 screen_pos = (world_pos - camera_pos) * camera_zoom;
+    glm::vec2 screen_size = size * camera_zoom;
+    
+    // 检查是否在屏幕范围内（简单的AABB裁剪）
+    if (screen_pos.x + screen_size.x < 0 || screen_pos.x > screen_size_.x ||
+        screen_pos.y + screen_size.y < 0 || screen_pos.y > screen_size_.y) {
+        return; // 对象不在视口内，跳过渲染
+    }
+    
     SDL_FRect dst_rect = {
         position.x,
         position.y,
@@ -104,6 +122,7 @@ void Game::renderTexture(const Texture &texture, const glm::vec2 &position, cons
     SDL_RenderTextureRotated(renderer_, texture.texture, &texture.src_rect, &dst_rect, texture.angle, nullptr, texture.is_flip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 }
 
+// game.cpp
 void Game::run()
 {
     while (is_running_)
