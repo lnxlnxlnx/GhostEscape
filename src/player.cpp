@@ -35,7 +35,7 @@ void Player::update(float dt)
 void Player::render()
 {
     auto assetStore = game_.getAssetStore();
-    SDL_Texture *playerTexture = assetStore->getImage(game_.getConfig()->get<std::string>("player.texture"));
+    SDL_Texture *playerTexture = assetStore->getImage(game_.getConfig()->get<std::string>("player.texture4", "assets/test/hp.png"));
 
     // 创建源和目标矩形
     float w, h;
