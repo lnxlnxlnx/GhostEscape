@@ -57,13 +57,20 @@ bool Game::setFPS(Uint64 fps)
     return true;
 }
 
+Config *Game::getConfig()
+{
+    return asset_store_->getConfig();
+}
+
 void Game::drawGrid(const glm::vec2 &top_left, const glm::vec2 &botton_right, float grid_distance, SDL_FColor fcolor)
 {
     SDL_SetRenderDrawColorFloat(renderer_, fcolor.r, fcolor.g, fcolor.b, fcolor.a);
-    for (float x = top_left.x; x <= botton_right.x; x += grid_distance){
+    for (float x = top_left.x; x <= botton_right.x; x += grid_distance)
+    {
         SDL_RenderLine(renderer_, x, top_left.y, x, botton_right.y);
     }
-    for (float y = top_left.y; y <= botton_right.y; y += grid_distance){
+    for (float y = top_left.y; y <= botton_right.y; y += grid_distance)
+    {
         SDL_RenderLine(renderer_, top_left.x, y, botton_right.x, y);
     }
     SDL_SetRenderDrawColorFloat(renderer_, 0, 0, 0, 1);
@@ -72,13 +79,13 @@ void Game::drawGrid(const glm::vec2 &top_left, const glm::vec2 &botton_right, fl
 void Game::drawBoundary(const glm::vec2 &top_left, const glm::vec2 &botton_right, float boundary_width, SDL_FColor fcolor)
 {
     SDL_SetRenderDrawColorFloat(renderer_, fcolor.r, fcolor.g, fcolor.b, fcolor.a);
-    for (float i = 0; i < boundary_width; i++){
+    for (float i = 0; i < boundary_width; i++)
+    {
         SDL_FRect rect = {
             top_left.x - i,
             top_left.y - i,
             botton_right.x - top_left.x + 2 * i,
-            botton_right.y - top_left.y + 2 * i
-        };
+            botton_right.y - top_left.y + 2 * i};
         SDL_RenderRect(renderer_, &rect);
     }
     SDL_SetRenderDrawColorFloat(renderer_, 0, 0, 0, 1);
@@ -103,7 +110,7 @@ void Game::run()
         {
             dt_ = elapsed / 1.0e9; // 纳秒转换为秒
         }
-        //SDL_Log("FPS: %f", 1.0 / dt_);
+        // SDL_Log("FPS: %f", 1.0 / dt_);
     }
 }
 
@@ -148,7 +155,6 @@ void Game::init(std::string title, int width, int height)
 
     // 创建资源存储器
     asset_store_ = new AssetStore(renderer_, "assets/assets_config.json");
-    spdlog::info("游戏配置文件数据:{}", asset_store_->getConfig()->root().dump(4).c_str());
 
     current_scene_ = new SceneMain();
     current_scene_->init();

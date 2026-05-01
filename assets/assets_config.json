@@ -1,6 +1,8 @@
 {
     "player": {
-        "texture": "assets/test/hp.png",
+        "texture1": "assets/test/hp.png",
+        "texture": "assets/test/SpaceShip.png",
+        "texture3": "assets/test/yuki.jpg",
         "speed": 200.0
     },
     "enemy": {

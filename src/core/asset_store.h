@@ -32,6 +32,7 @@ public:
 
     ~AssetStore() = default;
 
+    void init();
     void clean();
 
     // 4个载入函数

@@ -12,7 +12,7 @@ void Player::init()
     game_.getAssetStore()->loadImage("assets/test/hp.png");
 
     // 方法2：直接获取（如果不存在会自动加载）
-    //SDL_Texture *playerTexture = game_.getAssetStore()->getImage("assets/test/yuki.jpg");
+    // SDL_Texture *playerTexture = game_.getAssetStore()->getImage("assets/test/yuki.jpg");
 }
 
 void Player::handleEvents(SDL_Event &event)
@@ -34,17 +34,19 @@ void Player::update(float dt)
 
 void Player::render()
 {
-    // game_.drawBoundary(render_position_, render_position_ + glm::vec2(20.0f), 5.0f, {1.0, 0.0, 0.0, 1.0});
-    //  获取玩家纹理
-    //SDL_Texture *playerTexture = game_.getAssetStore()->getImage("assets/test/hp.png");
     auto assetStore = game_.getAssetStore();
-    auto path = assetStore->getConfig()->get<std::string>("player.texture");
-    spdlog::info("Player texture path: {}", path);
-    SDL_Texture *playerTexture = assetStore->getImage(path);
+    SDL_Texture *playerTexture = assetStore->getImage(game_.getConfig()->get<std::string>("player.texture"));
 
     // 创建源和目标矩形
-    SDL_FRect srcRect = {0, 0, 32, 32}; // 假设精灵表中的第一帧
-    SDL_FRect destRect = {render_position_.x, render_position_.y, 32, 32};
+    float w, h;
+    SDL_GetTextureSize(playerTexture, &w, &h);
+    SDL_FRect srcRect = {0, 0, w, h}; // 假设精灵表中的第一帧
+    if (w > 200.0f)
+    {
+        w = w / 4.0f;       //TODO: 这里是为了测试，之后应该设计一个自动调整大小的函数
+        h = h / 4.0f;
+    }
+    SDL_FRect destRect = {render_position_.x, render_position_.y, w, h};
 
     // 渲染纹理
     if (playerTexture)

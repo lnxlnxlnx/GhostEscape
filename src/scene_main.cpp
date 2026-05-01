@@ -12,10 +12,10 @@ void SceneMain::init()
     player_->setPosition(world_size_ / 2.0f);
 
     // 加载背景音乐
-    game_.getAssetStore()->loadMusic("assets/test/06_Battle_in_Space_Intro.ogg");
+    game_.getAssetStore()->loadMusic(game_.getConfig()->get<std::string>("background_music"));
 
     // 播放背景音乐（循环）
-    Mix_Music *backgroundMusic = game_.getAssetStore()->getMusic("assets/test/06_Battle_in_Space_Intro.ogg");
+    Mix_Music *backgroundMusic = game_.getAssetStore()->getMusic(game_.getConfig()->get<std::string>("background_music"));
     if (backgroundMusic)
     {
         Mix_PlayMusic(backgroundMusic, -1); // -1表示无限循环

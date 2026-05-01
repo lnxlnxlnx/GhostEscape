@@ -13,7 +13,12 @@ AssetStore::AssetStore(SDL_Renderer *renderer, const std::string &config_file)
         spdlog::info("JSON 成功载入!");
         spdlog::info("Config file loaded successfully: {}", config_file);
     }
-    spdlog::info("Config data: {}", config_->root().dump(4).c_str());
+    //spdlog::info("Config data: {}", config_->root().dump(4).c_str());
+}
+
+void AssetStore::init()
+{
+
 }
 
 // asset_store.cpp
