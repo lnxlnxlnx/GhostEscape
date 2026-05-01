@@ -10,7 +10,8 @@ class Object
 protected:
     Game &game_ = Game::GetInstance();
     ObjectType type_ = ObjectType::NONE;
-
+    bool is_paused_ = false; // 是否暂停，暂停的对象不会被更新但会被渲染
+    bool is_active_ = true; // 是否活跃，活跃的对象会被更新和渲染
     std::vector<Object *> children_;
 
 public:
@@ -23,9 +24,13 @@ public:
     virtual void render();
     virtual void clean(); // 需要清理的资源，在clean()函数里面做。
 
-    // getters and stters
+    // getters and setters
     ObjectType getType() const { return type_; }
     void setType(ObjectType type) { type_ = type; }
+    bool isActive() const { return is_active_; }
+    void setActive(bool active) { is_active_ = active; }
+    bool isPaused() const { return is_paused_; }
+    void setPaused(bool paused) { is_paused_ = paused; }
 
     // children
     virtual void addChild(Object *child) { children_.push_back(child); }

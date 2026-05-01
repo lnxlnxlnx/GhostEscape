@@ -102,7 +102,7 @@ void Player::keyboardControl()
 void Player::move(float dt)
 {
     setPosition(position_ + velocity_ * dt);
-    SDL_Log("dt: %f, position: (%f, %f), velocity: (%f, %f)", dt, position_.x, position_.y, velocity_.x, velocity_.y);
+    // SDL_Log("dt: %f, position: (%f, %f), velocity: (%f, %f)", dt, position_.x, position_.y, velocity_.x, velocity_.y);
     position_ = glm::clamp(position_, glm::vec2(0), game_.getCurrentScene()->getWorldSize());
 }
 

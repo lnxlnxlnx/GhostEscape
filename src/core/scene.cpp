@@ -70,10 +70,12 @@ void Scene::update(float dt)
     Object::update(dt);
     for (auto &child : children_world_)
     {
+        if (child->isPaused() || !child->isActive()) continue;
         child->update(dt);
     }
     for (auto &child : children_screen_)
     {
+        if (child->isPaused() || !child->isActive()) continue;
         child->update(dt);
     }
 }
@@ -83,10 +85,12 @@ void Scene::render()
     Object::render();
     for (auto &child : children_world_)
     {
+        if (!child->isActive()) continue;
         child->render();
     }
     for (auto &child : children_screen_)
     {
+        if (!child->isActive()) continue;
         child->render();
     }
 }

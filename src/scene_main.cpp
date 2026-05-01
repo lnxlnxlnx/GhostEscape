@@ -44,13 +44,24 @@ void SceneMain::handleEvents(SDL_Event &event)
     }
 }
 
-void SceneMain::update(float dt)
+/*brief://NOTE: 这里的dt是从Game传过来的，已经经过了帧率控制，单位是秒*/
+void SceneMain::update(float dt)    
 {
     Scene::update(dt);
     // auto camera_pos_ds = glm::vec2(100.0f, 100.0f); // 每秒向右下方移动10个单位
     //  camera_pos_ += glm::vec2(100.0f, 100.0f) * dt; // 每秒向右下方移动10个单位
     // updateCamera(dt, camera_pos_ + camera_pos_ds);
     updateCamera(dt);
+    static float time_accumulator = 0.0f;
+    time_accumulator += dt;
+    if (time_accumulator >= 3.0f)
+    {
+        cameraShake(10.0f, 1.0f);
+        time_accumulator = 0.0f;
+        player_->setPaused(!player_->isPaused()); // 每5秒切换玩家的活跃状态
+        spdlog::info("Player active: {}", player_->isActive());
+        spdlog::info("Player paused: {}", player_->isPaused());
+    }
 }
 
 void SceneMain::updateCamera(float dt)
@@ -77,11 +88,11 @@ void SceneMain::updateCameraShake(float dt)
 }
 void SceneMain::render()
 {
+    renderBackground();
     Scene::render();
     // 设置缩放因子
     setCameraZoom(camera_zoom_);
     SDL_SetRenderScale(game_.getRenderer(), camera_zoom_, camera_zoom_);
-    renderBackground();
 }
 
 void SceneMain::clean()

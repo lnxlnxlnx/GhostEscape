@@ -9,15 +9,20 @@ void Object::handleEvents(SDL_Event& event) {
 
 void Object::update(float dt) {
     for (auto& child : children_) {
+        if (!child->isActive()|| child->isPaused()) {
+            continue;
+        }
         child->update(dt);
     }
 } 
 
 void Object::render() {
     for (auto& child : children_) {
-        child->render();
+        if (child->isActive()) {
+            child->render();
+        }
     }
-}
+}   
 
 void Object::clean() {
     for (auto& child : children_) {
