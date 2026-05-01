@@ -3,11 +3,13 @@
         "texture1": "assets/test/hp.png",
         "texture": "assets/test/SpaceShip.png",
         "texture3": "assets/test/yuki.jpg",
-        "speed": 200.0
+        "speed": 500.0,
+        "size": [80, 80]
     },
     "enemy": {
         "texture": "assets/test/enemy.png",
-        "speed": 100.0
+        "speed": 100.0,
+        "size": [32, 32]
     },
     "background_music": "assets/test/06_Battle_in_Space_Intro.ogg",
     "fonts": {

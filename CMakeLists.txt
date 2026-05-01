@@ -37,6 +37,7 @@ add_executable(${TARGET} src/main.cpp
     src/core/scene.cpp
     src/core/asset_store.cpp
     src/core/config_manager.cpp
+    src/core/object_affiliate.cpp
     src/scene_main.cpp
     src/player.cpp
     src/affiliate/sprite.cpp

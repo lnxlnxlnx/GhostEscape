@@ -14,6 +14,9 @@ protected:
     glm::vec2 size_ = glm::vec2(0, 0); // 大小
 
 public:
+
+    void autoResize();
+
     // getters and setters
     ObjectScreen *getParent() const { return parent_; }
     void setParent(ObjectScreen *parent) { parent_ = parent; }

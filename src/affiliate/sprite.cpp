@@ -33,3 +33,4 @@ void Sprite::setTexture(const Texture &texture)
     texture_ = texture;
     size_ = glm::vec2(texture.src_rect.w, texture.src_rect.h);
 }
+

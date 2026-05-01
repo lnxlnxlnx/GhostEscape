@@ -13,7 +13,8 @@ void Player::init()
     // 加载玩家纹理
     //game_.getAssetStore()->loadImage("assets/test/hp.png");
     auto sprite = new Sprite();
-    sprite->setTexture(Texture("assets/test/hp.png"));
+    sprite->setTexture(Texture(game_.getConfig()->get<std::string>("player.texture", "assets/test/hp.png")));
+    sprite->autoResize();
     sprite->setParent(this);
     addChild(sprite);
 }
@@ -28,9 +29,9 @@ void Player::update(float dt)
     Actor::update(dt);
     keyboardControl();
     velocity_ *= 0.9f;
-    // if (glm::length(velocity_) < 0.1f) {
-    //     velocity_ = glm::vec2(0, 0);
-    // }
+    if (glm::length(velocity_) < 0.1f) {
+        velocity_ = glm::vec2(0, 0);
+    }
     move(dt);
     syncCamera(dt);
     updateDash(dt);
@@ -39,30 +40,6 @@ void Player::update(float dt)
 void Player::render()
 {
     Actor::render();
-    auto assetStore = game_.getAssetStore();
-    // SDL_Texture *playerTexture = assetStore->getImage(game_.getConfig()->get<std::string>("player.texture4", "assets/test/hp.png"));
-
-    // // 创建源和目标矩形
-    // float w, h;
-    // SDL_GetTextureSize(playerTexture, &w, &h);
-    // SDL_FRect srcRect = {0, 0, w, h}; // 假设精灵表中的第一帧
-    // if (w > 200.0f)
-    // {
-    //     w = w / 4.0f;       //TODO: 这里是为了测试，之后应该设计一个自动调整大小的函数
-    //     h = h / 4.0f;
-    // }
-    // SDL_FRect destRect = {render_position_.x, render_position_.y, w, h};
-
-    // // 渲染纹理
-    // if (playerTexture)
-    // {
-    //     SDL_RenderTexture(game_.getRenderer(), playerTexture, &srcRect, &destRect);
-    // }
-    // else
-    // {
-    //     // 如果纹理加载失败，使用备用的渲染方法
-    //     game_.drawBoundary(render_position_, render_position_ + glm::vec2(20.0f), 5.0f, {1.0, 0.0, 0.0, 1.0});
-    // }
 }
 
 void Player::clean()
