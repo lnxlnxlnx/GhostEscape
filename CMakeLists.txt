@@ -39,8 +39,12 @@ add_executable(${TARGET} src/main.cpp
     src/core/config_manager.cpp
     src/scene_main.cpp
     src/player.cpp
+    src/affiliate/sprite.cpp
     # src/asset_manager.cpp
     )
+
+# 设置包含目录
+target_include_directories(${TARGET} PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 # 链接库
 target_link_libraries(${TARGET}

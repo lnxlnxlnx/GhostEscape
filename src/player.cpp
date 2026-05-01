@@ -2,6 +2,8 @@
 #include "player.h"
 #include "core/scene.h"
 #include "core/asset_store.h"
+#include "affiliate/sprite.h"
+#include <spdlog/spdlog.h>
 
 void Player::init()
 {
@@ -9,11 +11,11 @@ void Player::init()
     max_speed_ = 500.0f;
 
     // 加载玩家纹理
-    // 方法1：预先加载
-    game_.getAssetStore()->loadImage("assets/test/hp.png");
-
-    // 方法2：直接获取（如果不存在会自动加载）
-    // SDL_Texture *playerTexture = game_.getAssetStore()->getImage("assets/test/yuki.jpg");
+    //game_.getAssetStore()->loadImage("assets/test/hp.png");
+    auto sprite = new Sprite();
+    sprite->setTexture(Texture("assets/test/hp.png"));
+    sprite->setParent(this);
+    addChild(sprite);
 }
 
 void Player::handleEvents(SDL_Event &event)
@@ -38,29 +40,29 @@ void Player::render()
 {
     Actor::render();
     auto assetStore = game_.getAssetStore();
-    SDL_Texture *playerTexture = assetStore->getImage(game_.getConfig()->get<std::string>("player.texture4", "assets/test/hp.png"));
+    // SDL_Texture *playerTexture = assetStore->getImage(game_.getConfig()->get<std::string>("player.texture4", "assets/test/hp.png"));
 
-    // 创建源和目标矩形
-    float w, h;
-    SDL_GetTextureSize(playerTexture, &w, &h);
-    SDL_FRect srcRect = {0, 0, w, h}; // 假设精灵表中的第一帧
-    if (w > 200.0f)
-    {
-        w = w / 4.0f;       //TODO: 这里是为了测试，之后应该设计一个自动调整大小的函数
-        h = h / 4.0f;
-    }
-    SDL_FRect destRect = {render_position_.x, render_position_.y, w, h};
+    // // 创建源和目标矩形
+    // float w, h;
+    // SDL_GetTextureSize(playerTexture, &w, &h);
+    // SDL_FRect srcRect = {0, 0, w, h}; // 假设精灵表中的第一帧
+    // if (w > 200.0f)
+    // {
+    //     w = w / 4.0f;       //TODO: 这里是为了测试，之后应该设计一个自动调整大小的函数
+    //     h = h / 4.0f;
+    // }
+    // SDL_FRect destRect = {render_position_.x, render_position_.y, w, h};
 
-    // 渲染纹理
-    if (playerTexture)
-    {
-        SDL_RenderTexture(game_.getRenderer(), playerTexture, &srcRect, &destRect);
-    }
-    else
-    {
-        // 如果纹理加载失败，使用备用的渲染方法
-        game_.drawBoundary(render_position_, render_position_ + glm::vec2(20.0f), 5.0f, {1.0, 0.0, 0.0, 1.0});
-    }
+    // // 渲染纹理
+    // if (playerTexture)
+    // {
+    //     SDL_RenderTexture(game_.getRenderer(), playerTexture, &srcRect, &destRect);
+    // }
+    // else
+    // {
+    //     // 如果纹理加载失败，使用备用的渲染方法
+    //     game_.drawBoundary(render_position_, render_position_ + glm::vec2(20.0f), 5.0f, {1.0, 0.0, 0.0, 1.0});
+    // }
 }
 
 void Player::clean()

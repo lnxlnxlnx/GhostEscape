@@ -10,6 +10,7 @@
 class Scene; // 前向声明
 class AssetStore;
 class Config;
+class Texture;
 class Game
 {
     glm::vec2 screen_size_ = glm::vec2(0); // 屏幕大小
@@ -54,6 +55,7 @@ public:
     // 工具函数
     void drawGrid(const glm::vec2 &top_left, const glm::vec2 &botton_right, float grid_distance, SDL_FColor fcolor);         // 绘制网格
     void drawBoundary(const glm::vec2 &top_left, const glm::vec2 &botton_right, float boundary_width, SDL_FColor fcolor); // 绘制边界
+    void renderTexture(const Texture &texture, const glm::vec2 &position, const glm::vec2 &size);
 
     void run();                                          // 运行游戏, 执行游戏主循环
     void init(std::string title, int width, int height); // 初始化游戏

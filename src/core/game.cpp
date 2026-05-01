@@ -1,6 +1,7 @@
-#include "game.h"
-#include "../scene_main.h"
-#include "asset_store.h"
+#include "core/game.h"
+#include "scene_main.h"
+#include "core/asset_store.h"
+#include "affiliate/sprite.h"
 
 // 自定义彩色日志输出函数
 static void SDL_ColorLog(void *userdata, int category, SDL_LogPriority priority, const char *message)
@@ -89,6 +90,18 @@ void Game::drawBoundary(const glm::vec2 &top_left, const glm::vec2 &botton_right
         SDL_RenderRect(renderer_, &rect);
     }
     SDL_SetRenderDrawColorFloat(renderer_, 0, 0, 0, 1);
+}
+
+// game.cpp
+void Game::renderTexture(const Texture &texture, const glm::vec2 &position, const glm::vec2 &size)
+{
+    SDL_FRect dst_rect = {
+        position.x,
+        position.y,
+        size.x,
+        size.y
+    };
+    SDL_RenderTextureRotated(renderer_, texture.texture, &texture.src_rect, &dst_rect, texture.angle, nullptr, texture.is_flip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 }
 
 void Game::run()
