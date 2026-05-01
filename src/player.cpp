@@ -17,6 +17,7 @@ void Player::init()
 
 void Player::handleEvents(SDL_Event &event)
 {
+    (void)event; // 暂时不处理事件，直接在update()里获取键盘状态
 }
 
 void Player::update(float dt)
@@ -35,7 +36,11 @@ void Player::render()
 {
     // game_.drawBoundary(render_position_, render_position_ + glm::vec2(20.0f), 5.0f, {1.0, 0.0, 0.0, 1.0});
     //  获取玩家纹理
-    SDL_Texture *playerTexture = game_.getAssetStore()->getImage("assets/test/hp.png");
+    //SDL_Texture *playerTexture = game_.getAssetStore()->getImage("assets/test/hp.png");
+    auto assetStore = game_.getAssetStore();
+    auto path = assetStore->getConfig()->get<std::string>("player.texture");
+    spdlog::info("Player texture path: {}", path);
+    SDL_Texture *playerTexture = assetStore->getImage(path);
 
     // 创建源和目标矩形
     SDL_FRect srcRect = {0, 0, 32, 32}; // 假设精灵表中的第一帧

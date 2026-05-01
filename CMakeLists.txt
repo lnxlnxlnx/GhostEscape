@@ -37,6 +37,8 @@ add_executable(${TARGET} src/main.cpp
     src/scene_main.cpp
     src/player.cpp
     src/core/asset_store.cpp
+    src/core/config_manager.cpp
+    # src/asset_manager.cpp
     )
 
 # 链接库

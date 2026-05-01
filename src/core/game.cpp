@@ -147,7 +147,8 @@ void Game::init(std::string title, int width, int height)
     frame_delay_ = 1'000'000'000 / FPS_; // 计算每帧的延迟时间，单位为纳秒
 
     // 创建资源存储器
-    asset_store_ = new AssetStore(renderer_);
+    asset_store_ = new AssetStore(renderer_, "assets/assets_config.json");
+    spdlog::info("游戏配置文件数据:{}", asset_store_->getConfig()->root().dump(4).c_str());
 
     current_scene_ = new SceneMain();
     current_scene_->init();
@@ -188,6 +189,7 @@ void Game::handleEvents()
 
 void Game::update(float dt)
 {
+    (void)dt; // 当前函数不直接使用dt，但传递给场景以供使用
     if (current_scene_)
     {
         current_scene_->update(dt_);

@@ -1,6 +1,7 @@
 #ifndef B7525D5C_C16F_4123_814C_374AB4A1EEA3
 #define B7525D5C_C16F_4123_814C_374AB4A1EEA3
 #include "game.h"
+#include <spdlog/spdlog.h>
 
 class Object {
 protected:

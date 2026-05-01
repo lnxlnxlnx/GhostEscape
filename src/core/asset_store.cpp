@@ -1,4 +1,20 @@
 #include "asset_store.h"
+#include <spdlog/spdlog.h>
+
+//TODO: 最好不要在构造函数里面做任何事，尤其是可能失败的事，比如加载文件。可以在init()函数里面做这些事。
+AssetStore::AssetStore(SDL_Renderer *renderer, const std::string &config_file)
+{
+    renderer_ = renderer;
+    config_ = new Config();
+    if (!config_->load(config_file))
+    {
+        spdlog::error("Failed to load config file: {}", config_file);
+    } else {
+        spdlog::info("JSON 成功载入!");
+        spdlog::info("Config file loaded successfully: {}", config_file);
+    }
+    spdlog::info("Config data: {}", config_->root().dump(4).c_str());
+}
 
 // asset_store.cpp
 void AssetStore::clean()

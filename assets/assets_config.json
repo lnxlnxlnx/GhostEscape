@@ -1,0 +1,15 @@
+{
+    "player": {
+        "texture": "assets/test/hp.png",
+        "speed": 200.0
+    },
+    "enemy": {
+        "texture": "assets/test/enemy.png",
+        "speed": 100.0
+    },
+    "background_music": "assets/test/06_Battle_in_Space_Intro.ogg",
+    "fonts": {
+        "main": {"path": "assets/fonts/main.ttf", "size": 24},
+        "ui": {"path": "assets/fonts/ui.ttf", "size": 18}
+    }
+}

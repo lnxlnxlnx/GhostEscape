@@ -10,10 +10,15 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include <string>
 #include <vector>
+#include <fstream>
+#include <nlohmann/json.hpp>
+#include "config_manager.h"
 
 class AssetStore
 {
     SDL_Renderer *renderer_ = nullptr;
+    //nlohmann::json json_data_;
+    Config *config_;
     std::unordered_map<std::string, SDL_Texture*> textures_;
     std::unordered_map<std::string, Mix_Chunk*> sounds_;
     std::unordered_map<std::string, Mix_Music*> music_;
@@ -22,7 +27,9 @@ class AssetStore
 public:
 
 //NOTE: 如果是智能指针，则需要使用std::move()、game引用或者使用share_ptr
-    AssetStore(SDL_Renderer* renderer) { renderer_ = renderer; }
+    AssetStore(SDL_Renderer* renderer){renderer_ = renderer;}
+    AssetStore(SDL_Renderer* renderer, const std::string &config_file);
+
     ~AssetStore() = default;
 
     void clean();
@@ -43,6 +50,9 @@ public:
     void unloadSound(const std::string &file_path);
     void unloadMusic(const std::string &file_path);
     void unloadFont(const std::string &file_path);
+
+    //getters and setters
+    auto getConfig() const { return config_; }
 };
 
 #endif // ASSET_STORE_H
