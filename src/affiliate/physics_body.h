@@ -23,6 +23,8 @@ public:
     // 工具函数
     void applyForce(const glm::vec2 &force);
 
+    void applyImpulse(const glm::vec2 &impulse);
+
     // getters and setters
     void setCollider(Collider *collider) { collider_ = collider; }
     Collider *getCollider() const { return collider_; }

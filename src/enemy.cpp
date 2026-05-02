@@ -4,6 +4,7 @@
 #include "core/config_manager.h"
 #include "bullet.h"
 #include "affiliate/collider.h"
+#include "scene_main.h"
 
 void Enemy::init()
 {
@@ -85,6 +86,7 @@ void Enemy::attack()
     if (!collider_ || target_->getCollider() == nullptr) return;
     if (collider_->isColliding(target_->getCollider())) {
         // TODO: attack
+        SceneMain::solveImpulse(this, target_);
         SDL_Log("Circle vs Circle");
     }
 }

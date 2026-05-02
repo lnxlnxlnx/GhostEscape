@@ -23,3 +23,10 @@ void PhysicsBody::applyForce(const glm::vec2 &force)
         return;
     acceleration_ += force / mass;
 }
+
+void PhysicsBody::applyImpulse(const glm::vec2 &impulse)
+{
+    if (isStatic)
+        return;
+    tf_velocity_ += impulse / mass;
+}

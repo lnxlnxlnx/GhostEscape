@@ -3,6 +3,7 @@
 #include "core/scene.h"
 
 class Player;
+class Actor;
 class SceneMain: public Scene
 {
     // 相机振动
@@ -29,6 +30,7 @@ public:
     // 工具函数
     void renderBackground();
     void cameraShake(float power, float duration);
+    static void solveImpulse(Actor* player, Actor* other);
 
 };
 
