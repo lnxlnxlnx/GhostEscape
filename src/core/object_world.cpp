@@ -8,6 +8,14 @@ void ObjectWorld::update(float dt)
     render_position_ = game_.getCurrentScene()->worldToScreen(position_);
 }
 
+bool ObjectWorld::ifOutOfWorld(ObjectWorld *obj)
+{
+
+    auto world_size = Game::GetInstance().getCurrentScene()->getWorldSize();
+    auto pos = obj->getPosition();
+    return pos.x < 0 || pos.y < 0 || pos.x > world_size.x || pos.y > world_size.y;
+}
+
 void ObjectWorld::setPosition(const glm::vec2 &position)
 {
     position_ = position;

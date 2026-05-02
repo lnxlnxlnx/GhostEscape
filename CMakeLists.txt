@@ -43,6 +43,7 @@ add_executable(${TARGET} src/main.cpp
     src/affiliate/sprite.cpp
     src/affiliate/sprite_anim.cpp
     src/enemy.cpp
+    src/bullet.cpp
     # src/asset_manager.cpp
     )
 

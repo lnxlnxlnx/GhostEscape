@@ -2,6 +2,7 @@
 #include "enemy.h"
 #include "affiliate/sprite_anim.h"
 #include "core/config_manager.h"
+#include "bullet.h"
 
 void Enemy::init()
 {
@@ -29,6 +30,7 @@ void Enemy::update(float dt)
     else if (timer_ > 4.0f)
     {
         changeState(State::DIE);
+        Bullet::addBulletChild(this, game_.getConfig()->get<std::string>("bullet.texture", "assets/test/hp.png"), 1.0f);
     }
     if (timer_ > 6.0f){
         timer_ = 0.0f;
