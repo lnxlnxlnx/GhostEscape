@@ -17,8 +17,9 @@ void Player::init()
     auto sprite = SpriteAnim::addSpriteChild(this, game_.getConfig()->get<std::string>("player.texture", "assets/test/hp.png"));
     auto sprite_hp = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.textureHp", "assets/test/hp.png"));
     sprite->autoResize();
-    sprite_hp->setOffset(glm::vec2(sprite->getSize().x / 2.0f - sprite_hp->getSize().x / 2.0f, -sprite_hp->getSize().y / 2.0f));
-    sprite->setOffset(glm::vec2(0, sprite->getSize().y));
+    sprite_hp->setOffsetByAnchor(Anchor::TOP_CENTER);
+    sprite_hp->setOffset(sprite_hp->getOffset() + glm::vec2(0, -sprite->getSize().y ));
+    sprite->setOffset(glm::vec2(- sprite->getSize().x / 2.0f, sprite->getSize().y / 2.0f));
     sprite_idle_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.sprite_idle", "assets/sprite/ghost-idle.png"), 2.0f);
     sprite_move_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.sprite_move", "assets/sprite/ghostDead-Sheet.png"), 2.0f);
     sprite_move_->setActive(false);
@@ -27,7 +28,7 @@ void Player::init()
     explosion_sprite->setPlayMode(SpriteAnimPlayMode::PLAY_ONCE);
 
     // 碰撞体
-    collider_ = Collider::addColliderChild(this, sprite_idle_->getSize(), Collider::Type::CIRCLE);
+    collider_ = Collider::addColliderChild(this, sprite_idle_->getSize()/2.0f, Collider::Type::CIRCLE);
 }
 
 void Player::handleEvents(SDL_Event &event)

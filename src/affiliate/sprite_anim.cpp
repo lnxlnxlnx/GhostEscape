@@ -44,11 +44,12 @@ void SpriteAnim::updateAnimByPlayMode(float dt)
         texture_.src_rect.x = current_frame_ * texture_.src_rect.w;
     }
 }
-SpriteAnim *SpriteAnim::addSpriteAnimChild(ObjectScreen *parent, const std::string &file_path, float scale)
+SpriteAnim *SpriteAnim::addSpriteAnimChild(ObjectScreen *parent, const std::string &file_path, float scale, Anchor anchor)
 {
     auto sprite_anim = new SpriteAnim();
     sprite_anim->init();
     sprite_anim->setTexture(Texture(file_path));
+    sprite_anim->setAnchor(anchor);
     sprite_anim->setScale(scale);
     sprite_anim->setParent(parent);
     parent->addChild(sprite_anim);

@@ -10,11 +10,12 @@ void Collider::render()
 #endif // DEBUG_MODE
 }
 
-Collider *Collider::addColliderChild(ObjectScreen *parent, glm::vec2 size, Type type)
+Collider *Collider::addColliderChild(ObjectScreen *parent, glm::vec2 size, Type type, Anchor anchor)
 {
     auto collider = new Collider();
     collider->init();
     collider->setParent(parent);
+    collider->setAnchor(anchor);
     collider->setSize(size);
     collider->setType(type);
     parent->addChild(collider);

@@ -22,7 +22,7 @@ class SpriteAnim : public Sprite
     void updateAnimByPlayMode(float dt);
 
 public:
-    static SpriteAnim* addSpriteAnimChild(ObjectScreen* parent, const std::string& file_path, float scale = 1.0f);
+    static SpriteAnim* addSpriteAnimChild(ObjectScreen* parent, const std::string& file_path, float scale = 1.0f, Anchor anchor = Anchor::CENTER);
     virtual void update(float dt) override;
 
     // methods

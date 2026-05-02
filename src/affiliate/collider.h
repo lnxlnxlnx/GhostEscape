@@ -19,7 +19,7 @@ protected:
 public:
     virtual void render() override;
     
-    static Collider* addColliderChild(ObjectScreen* parent, glm::vec2 size, Type type = Type::CIRCLE);
+    static Collider* addColliderChild(ObjectScreen* parent, glm::vec2 size, Type type = Type::CIRCLE, Anchor anchor = Anchor::CENTER);
     bool isColliding(Collider* other);
 
     // getters and setters

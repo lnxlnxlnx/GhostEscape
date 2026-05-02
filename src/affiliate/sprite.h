@@ -24,7 +24,7 @@ protected:
 
 public:
     Sprite() = default;
-    static Sprite *addSpriteChild(ObjectScreen *parent, const std::string &file_path, float scale = 1.0f);
+    static Sprite *addSpriteChild(ObjectScreen *parent, const std::string &file_path, float scale = 1.0f, Anchor anchor = Anchor::CENTER);
 
     virtual void render() override;
 
@@ -35,7 +35,6 @@ public:
     bool getFlip() const { return texture_.is_flip; }
     void setAngle(float angle) { texture_.angle = angle; }
     float getAngle() const { return texture_.angle; }
-    void setScale(float scale){size_ *= scale;}
 };
 
 #endif /* E2C96073_6F1C_4907_9EBC_0E1B90C86319 */
