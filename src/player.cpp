@@ -11,6 +11,7 @@ void Player::init()
 {
     Actor::init();
     max_speed_ = 500.0f;
+    setMass(8.0f);
 
     // 加载玩家纹理
     auto sprite = SpriteAnim::addSpriteChild(this, game_.getConfig()->get<std::string>("player.texture", "assets/test/hp.png"));

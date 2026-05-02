@@ -124,7 +124,7 @@ void SceneMain::cameraShake(float power, float duration)
     shake_time_ = duration;
 }
 
-void SceneMain::solveImpulse(Actor *player, Actor *other)
+void SceneMain::solveImpulse(Actor *other, Actor *player)
 {
     auto normal_line = other->getPosition() - player->getPosition();
     normal_line = glm::normalize(normal_line);
@@ -132,8 +132,8 @@ void SceneMain::solveImpulse(Actor *player, Actor *other)
     auto other_velocity = glm::dot(other->getVelocity(), normal_line);
     auto player_mass = player->getMass();
     auto other_mass = other->getMass();
-    auto new_player_velocity_dv = (player_mass - other_mass) * player_velocity + 2.0f * other_mass * other_velocity / (player_mass + other_mass) ;
-    auto new_other_velocity_dv = ( other_mass - player_mass) * other_velocity + 2.0f * player_mass * player_velocity / (player_mass + other_mass) ;
+    auto new_player_velocity_dv = ((player_mass - other_mass) * player_velocity + 2.0f * other_mass * other_velocity) / (player_mass + other_mass) ;
+    auto new_other_velocity_dv = ((other_mass - player_mass) * other_velocity + 2.0f * player_mass * player_velocity) / (player_mass + other_mass) ;
 
     auto new_player_velocity = player->getVelocity() + (new_player_velocity_dv - player_velocity) * normal_line;
     auto new_other_velocity = other->getVelocity() + (new_other_velocity_dv - other_velocity) * normal_line;

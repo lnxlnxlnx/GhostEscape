@@ -30,7 +30,7 @@ public:
     // 工具函数
     void renderBackground();
     void cameraShake(float power, float duration);
-    static void solveImpulse(Actor* player, Actor* other);
+    static void solveImpulse(Actor* other, Actor* player);
 
 };
 

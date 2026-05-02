@@ -11,7 +11,7 @@ class Actor : public ObjectWorld
 protected:
     glm::vec2 velocity_ = glm::vec2(0, 0); // 速度
     float max_speed_ = 100.0f; // 最大速度大小
-    float mass_ = 1.0f; // 质量，TODO: 可以改成一个属性结构体，包含质量、速度、加速度等物理属性
+    float mass_ = 1000.0f; // 质量，TODO: 可以改成一个属性结构体，包含质量、速度、加速度等物理属性
     float acceleration_ = 0.0f;
 
 public:
