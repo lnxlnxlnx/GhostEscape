@@ -96,13 +96,14 @@ void Player::move(float dt)
 
 void Player::syncCamera(float dt)
 {
+    //BUG: 导致玩家在靠近边界时摄像机无法跟随玩家移动
     // game_.getCurrentScene()->setCameraPosition(position_ - game_.getScreenSize() / 2.0f);
-    float dead_zone_percentage = 0.5f;
+    float dead_zone_percentage = 0.3f;
     float dead_zone_width = game_.getScreenSize().x * dead_zone_percentage;
     float dead_zone_height = game_.getScreenSize().y * dead_zone_percentage;
     SDL_FRect dead_zone = {
-        static_cast<float>(game_.getCurrentScene()->getCameraPos().x + dead_zone_width / 2.0f),
-        static_cast<float>(game_.getCurrentScene()->getCameraPos().y + dead_zone_height / 2.0f),
+        static_cast<float>((game_.getCurrentScene()->getCameraPos().x - dead_zone_width) /2.0f),
+        static_cast<float>((game_.getCurrentScene()->getCameraPos().y - dead_zone_height) / 2.0f),
         static_cast<float>(dead_zone_width),
         static_cast<float>(dead_zone_height)};
 

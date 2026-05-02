@@ -12,7 +12,7 @@ void Scene::setCameraPosition(const glm::vec2 &pos)
 {
     camera_pos_ = pos;
     // 限制摄像机在世界范围内
-    camera_pos_ = glm::clamp(camera_pos_, glm::vec2(0), world_size_ ); // NOTE: / camera_zoom_ 是为了考虑缩放后的屏幕大小
+    //camera_pos_ = glm::clamp(camera_pos_, glm::vec2(0), world_size_ ); // NOTE: / camera_zoom_ 是为了考虑缩放后的屏幕大小
     // BUG: 不知道为啥摄像机没法移动到下面和右边的边界
      //camera_pos_ = glm::clamp(camera_pos_, glm::vec2(0), world_size_ - game_.getScreenSize() / camera_zoom_);
 }
