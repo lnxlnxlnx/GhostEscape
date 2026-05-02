@@ -16,7 +16,7 @@ class Player : public Actor
     float dash_duration_ = 0.2f;
     float dash_cool_down = 0.0f;
 
-    // 精灵动画
+    // 精灵动画     //TODO: 可以改成std::map<std::string, SpriteAnim*>，用状态名来索引不同的动画，或者用一个current_sprite指针来指向当前的动画
     SpriteAnim *sprite_idle_ = nullptr;
     SpriteAnim *sprite_move_ = nullptr;
     bool is_moving_ = false;

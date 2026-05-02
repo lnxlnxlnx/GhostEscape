@@ -122,12 +122,13 @@ void Player::syncCamera(float dt)
 
 void Player::updateState()
 {
-    if (velocity_.x < 0)
+    // 类似施密特触发器的状态检查和切换
+    if (! sprite_move_->getFlip() && velocity_.x < -10.0f)
     {
         sprite_move_->setFlip(true);
         sprite_idle_->setFlip(true);
     }
-    else
+    else if (sprite_move_->getFlip() && velocity_.x > 10.0f)
     {
         sprite_move_->setFlip(false);
         sprite_idle_->setFlip(false);
