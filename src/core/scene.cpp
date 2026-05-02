@@ -31,7 +31,7 @@ void Scene::addChild(Object *child)
     }
 }
 
-void Scene::removeChild(Object *child)
+std::vector<Object *>::iterator Scene::removeChild(Object *child)
 {
     switch (child->getType())
     {
@@ -40,11 +40,13 @@ void Scene::removeChild(Object *child)
             break;
         case ObjectType::OBJECT_SCREEN:
             children_screen_.erase(std::remove(children_screen_.begin(), children_screen_.end(), dynamic_cast<ObjectScreen *>(child)), children_screen_.end());
+            return children_.end();
             break;
         default:
             children_.erase(std::remove(children_.begin(), children_.end(), child), children_.end());
             break;
     }
+    return children_.end();
 }
 
 void Scene::init()

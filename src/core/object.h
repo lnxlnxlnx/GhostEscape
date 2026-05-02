@@ -12,6 +12,7 @@ protected:
     ObjectType type_ = ObjectType::NONE;
     bool is_paused_ = false; // 是否暂停，暂停的对象不会被更新但会被渲染
     bool is_active_ = true; // 是否活跃，活跃的对象会被更新和渲染
+    bool need_remove_ = false; // 是否需要被移除，标记为true的对象会在下一帧被从场景中移除并清理资源
     std::vector<Object *> children_;
 
 public:
@@ -32,11 +33,15 @@ public:
     bool isPaused() const { return is_paused_; }
     void setPaused(bool paused) { is_paused_ = paused; }
 
+    void setNeedRemove(bool need_remove) { need_remove_ = need_remove; }
+
+    bool getNeedRemove() const { return need_remove_; }
+
     // children
     virtual void addChild(Object *child) { children_.push_back(child); }
-    virtual void removeChild(Object *child)
+    virtual std::vector<Object *>::iterator removeChild(Object *child)
     {
-        children_.erase(std::remove(children_.begin(), children_.end(), child), children_.end());
+        return children_.erase(std::remove(children_.begin(), children_.end(), child), children_.end());
     }
 };
 

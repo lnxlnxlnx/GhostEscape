@@ -33,7 +33,7 @@ void Player::handleEvents(SDL_Event &event)
 
 void Player::update(float dt)
 {
-    Actor::update(dt);
+    Actor::update(dt);      //NOTE: 先调用父类的update函数，父类的update函数会自动更新所有子对象（比如精灵动画），然后在这里再处理玩家自己的逻辑，比如输入、移动、状态切换等。
     keyboardControl();
     velocity_ *= 0.9f;
     if (glm::length(velocity_) < 0.1f)

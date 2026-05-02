@@ -11,6 +11,8 @@ void Enemy::init()
     anim_die_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("enemy.sprite_dead"), 2.0f);
     anim_hurt_->setActive(false);
     anim_die_->setActive(false);
+    // 设置死亡动画为播放一次模式
+    anim_die_->setPlayMode(SpriteAnimPlayMode::PLAY_ONCE);
     current_anim_ = anim_normal_;
 }
 

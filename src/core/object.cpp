@@ -8,7 +8,15 @@ void Object::handleEvents(SDL_Event& event) {
 }
 
 void Object::update(float dt) {
-    for (auto& child : children_) {
+    for (auto it = children_.begin(); it != children_.end();) {
+        auto child = *it;
+        if (child->getNeedRemove()) {
+            it = removeChild(child);
+            child->clean();
+            delete child;
+            continue;
+        }
+        ++it;
         if (!child->isActive()|| child->isPaused()) {
             continue;
         }

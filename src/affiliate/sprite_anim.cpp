@@ -16,7 +16,7 @@ void SpriteAnim::updateAnimByPlayMode(float dt)
             if (current_frame_ == total_frames_ + 1)
             {
                 setFinished(true);
-                setActive(false); // 播放完成后禁用对象
+                //setActive(false); // 播放完成后禁用对象
                 // TODO: 暂时还不知道怎么往下处理finish
             }
             break;
@@ -57,6 +57,10 @@ SpriteAnim *SpriteAnim::addSpriteAnimChild(ObjectScreen *parent, const std::stri
 
 void SpriteAnim::update(float dt)
 {
+    if (isFinished()){
+        setActive(false);
+        return; // 如果动画已经播放完成，直接返回，不再更新
+    }
     updateAnimByPlayMode(dt);
 }
 

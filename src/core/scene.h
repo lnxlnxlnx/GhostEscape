@@ -37,7 +37,7 @@ public:
     // 场景children的生命周期函数
     virtual void addChild(Object *child) override;
 
-    virtual void removeChild(Object *child) override;
+    virtual std::vector<Object *>::iterator removeChild(Object *child) override;
 
     virtual void init() override;
     virtual void handleEvents(SDL_Event &event) override;
