@@ -1,16 +1,25 @@
 #include "scene_main.h"
 #include "player.h"
 #include "core/asset_store.h"
+#include "enemy.h"
 
 void SceneMain::init()
 {
     world_size_ = game_.getScreenSize() * 3.0f; // 世界大小是屏幕大小的3倍
     camera_pos_ = glm::vec2(world_size_ / 2.0f);
-    // camera_pos_ = glm::vec2(-100.0f);
+
+    // 创建玩家
     player_ = new Player();
     player_->init();
     player_->setPosition(world_size_ / 2.0f);
     addChild(player_);
+
+    // 创建敌人
+    auto enemy = new Enemy();
+    enemy->init();
+    enemy->set_target(player_);
+    enemy->setPosition(world_size_ / 2.0f + glm::vec2(200.0f));
+    addChild(enemy);
 
     // 加载背景音乐
     game_.getAssetStore()->loadMusic(game_.getConfig()->get<std::string>("background_music"));
@@ -45,7 +54,7 @@ void SceneMain::handleEvents(SDL_Event &event)
 }
 
 /*brief://NOTE: 这里的dt是从Game传过来的，已经经过了帧率控制，单位是秒*/
-void SceneMain::update(float dt)    
+void SceneMain::update(float dt)
 {
     Scene::update(dt);
     // auto camera_pos_ds = glm::vec2(100.0f, 100.0f); // 每秒向右下方移动10个单位

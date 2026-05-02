@@ -30,7 +30,7 @@ public:
 
     // 移动和视角相关
     void keyboardControl();
-    void move(float dt);
+    void move(float dt) override;
     void syncCamera(float dt);
 
     // 状态检查和切换
