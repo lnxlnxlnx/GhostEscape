@@ -28,6 +28,10 @@ bool Collider::isColliding(Collider *other)
     {
         auto point1 = parent_->getPosition() + offset_ + size_ / 2.0f;
         auto point2 = other->parent_->getPosition() + other->offset_ + other->size_ / 2.0f;
+
+        auto dir = point2 - point1;
+        dir = glm::normalize(dir);
+        
         return glm::length(point1 - point2) < (size_.x + other->size_.x) / 2.0f;
     }
     // TODO： 其它形状的碰撞检测
