@@ -11,7 +11,7 @@ void Object::update(float dt) {
     for (auto it = children_.begin(); it != children_.end();) {
         auto child = *it;
         if (child->getNeedRemove()) {
-            it = removeChild(child);
+            it = children_.erase(it);
             child->clean();
             delete child;
             continue;

@@ -39,9 +39,9 @@ public:
 
     // children
     virtual void addChild(Object *child) { children_.push_back(child); }
-    virtual std::vector<Object *>::iterator removeChild(Object *child)
+    virtual void removeChild(Object *child)
     {
-        return children_.erase(std::remove(children_.begin(), children_.end(), child), children_.end());
+        children_.erase(std::remove(children_.begin(), children_.end(), child), children_.end());
     }
 };
 
