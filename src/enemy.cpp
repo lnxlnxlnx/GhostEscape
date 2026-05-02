@@ -3,6 +3,7 @@
 #include "affiliate/sprite_anim.h"
 #include "core/config_manager.h"
 #include "bullet.h"
+#include "affiliate/collider.h"
 
 void Enemy::init()
 {
@@ -15,6 +16,9 @@ void Enemy::init()
     // 设置死亡动画为播放一次模式
     anim_die_->setPlayMode(SpriteAnimPlayMode::PLAY_ONCE);
     current_anim_ = anim_normal_;
+
+    // 碰撞体
+    collider_ = Collider::addColliderChild(this, anim_normal_->getSize(), Collider::Type::CIRCLE);
 }
 
 void Enemy::update(float dt)
@@ -36,6 +40,7 @@ void Enemy::update(float dt)
         timer_ = 0.0f;
         changeState(State::NORMAL);
     }
+    attack();
 }
 
 void Enemy::aim_target(Player *target)
@@ -72,4 +77,14 @@ void Enemy::changeState(State new_state)
 
 void Enemy::updateState(float dt)
 {
+}
+
+// enemy.cpp
+void Enemy::attack()
+{
+    if (!collider_ || target_->getCollider() == nullptr) return;
+    if (collider_->isColliding(target_->getCollider())) {
+        // TODO: attack
+        SDL_Log("Circle vs Circle");
+    }
 }

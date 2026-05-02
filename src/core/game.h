@@ -48,14 +48,15 @@ public:
     auto getScreenSize() const { return screen_size_; }
     auto getRenderer() const { return renderer_; }
     auto getCurrentScene() const { return current_scene_; }
-    //void changeScene(Scene *new_scene);
+    // void changeScene(Scene *new_scene);
     auto getAssetStore() { return asset_store_; }
 
-    Config* getConfig();
+    Config *getConfig();
     // 工具函数
-    void drawGrid(const glm::vec2 &top_left, const glm::vec2 &botton_right, float grid_distance, SDL_FColor fcolor);         // 绘制网格
+    void drawGrid(const glm::vec2 &top_left, const glm::vec2 &botton_right, float grid_distance, SDL_FColor fcolor);      // 绘制网格
     void drawBoundary(const glm::vec2 &top_left, const glm::vec2 &botton_right, float boundary_width, SDL_FColor fcolor); // 绘制边界
     void renderTexture(const Texture &texture, const glm::vec2 &position, const glm::vec2 &size);
+    void renderFillCircle(const glm::vec2 &position, const glm::vec2 &size, float alpha);
 
     void run();                                          // 运行游戏, 执行游戏主循环
     void init(std::string title, int width, int height); // 初始化游戏

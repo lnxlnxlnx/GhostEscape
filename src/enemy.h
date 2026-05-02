@@ -6,6 +6,7 @@
 #include "core/actor.h"
 
 class Player;
+class Collider;
 class Enemy : public Actor
 {
     enum class State
@@ -27,6 +28,9 @@ class Enemy : public Actor
     State current_state_ = State::NORMAL;
     Player *target_ = nullptr;
 
+    // 碰撞体
+    Collider *collider_ = nullptr;
+
 public:
     virtual void init();
     virtual void update(float dt) override; // override the update function from Actor
@@ -38,9 +42,13 @@ public:
 
     void updateState(float dt);
 
+    void attack();
+
     // getters and setters
     Player *get_target() { return target_; }
     void set_target(Player *target) { target_ = target; }
+    Collider *getCollider() const { return collider_; }
+    void setCollider(Collider *collider) { collider_ = collider; }
 };
 
 #endif // ENEMY_H

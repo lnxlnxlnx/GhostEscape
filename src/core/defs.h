@@ -1,6 +1,9 @@
 #ifndef AAA6A454_1ECE_40FA_8A46_91F247EE28F0
 #define AAA6A454_1ECE_40FA_8A46_91F247EE28F0
 // defs.h
+
+#define DEBUG_MODE 1
+
 enum class ObjectType
 {
     NONE,

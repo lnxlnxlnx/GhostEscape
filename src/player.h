@@ -7,6 +7,7 @@
 #include "core/actor.h"
 
 class SpriteAnim;
+class Collider;
 class Player : public Actor
 {
 
@@ -20,6 +21,9 @@ class Player : public Actor
     SpriteAnim *sprite_idle_ = nullptr;
     SpriteAnim *sprite_move_ = nullptr;
     bool is_moving_ = false;
+
+    // 碰撞体
+    Collider *collider_ = nullptr;
 
 public:
     virtual void init() override;
@@ -39,6 +43,11 @@ public:
 
     // 功能函数
     void updateDash(float dt);
+
+    // 获取属性
+    Collider *getCollider() const { return collider_; }
+    void setCollider(Collider *collider) { collider_ = collider; }
+
 };
 
 #endif // PLAYER_H

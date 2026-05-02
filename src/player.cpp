@@ -5,6 +5,7 @@
 #include "affiliate/sprite.h"
 #include "affiliate/sprite_anim.h"
 #include <spdlog/spdlog.h>
+#include "affiliate/collider.h"
 
 void Player::init()
 {
@@ -18,12 +19,14 @@ void Player::init()
     sprite_hp->setOffset(glm::vec2(sprite->getSize().x / 2.0f - sprite_hp->getSize().x / 2.0f, -sprite_hp->getSize().y / 2.0f));
     sprite->setOffset(glm::vec2(0, sprite->getSize().y));
     sprite_idle_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.sprite_idle", "assets/sprite/ghost-idle.png"), 2.0f);
-    //sprite_move_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("enemy.sprite_dead", "assets/sprite/ghostDead-Sheet.png"), 2.0f);
     sprite_move_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.sprite_move", "assets/sprite/ghostDead-Sheet.png"), 2.0f);
     sprite_move_->setActive(false);
 
     auto explosion_sprite = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("test.texture_explosion", "assets/sprite/ghost-idle.png"), 2.0f);
     explosion_sprite->setPlayMode(SpriteAnimPlayMode::PLAY_ONCE);
+
+    // 碰撞体
+    collider_ = Collider::addColliderChild(this, sprite_idle_->getSize(), Collider::Type::CIRCLE);
 }
 
 void Player::handleEvents(SDL_Event &event)
