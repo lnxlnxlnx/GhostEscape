@@ -7,6 +7,7 @@
         "texture": "assets/test/SpaceShip.png",
         "textureYuki": "assets/test/yuki.jpg",
         "sprite_idle": "assets/sprite/ghost-idle.png",
+        "sprite_move": "assets/sprite/ghost-move.png",
         "speed": 500.0,
         "size": [
             80,
@@ -15,6 +16,9 @@
     },
     "enemy": {
         "texture": "assets/test/enemy.png",
+        "sprite_move": "assets/sprite/ghost-move.png",
+        "sprite_dead": "assets/sprite/ghostDead-Sheet.png",
+        "sprite_hurt": "assets/sprite/ghostHurt-Sheet.png",
         "speed": 100.0,
         "size": [
             32,

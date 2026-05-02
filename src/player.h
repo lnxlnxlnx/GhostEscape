@@ -6,6 +6,7 @@
 
 #include "core/actor.h"
 
+class SpriteAnim;
 class Player : public Actor
 {
 
@@ -15,6 +16,11 @@ class Player : public Actor
     float dash_duration_ = 0.2f;
     float dash_cool_down = 0.0f;
 
+    // 精灵动画
+    SpriteAnim *sprite_idle_ = nullptr;
+    SpriteAnim *sprite_move_ = nullptr;
+    bool is_moving_ = false;
+
 public:
     virtual void init() override;
     virtual void handleEvents(SDL_Event &event) override;
@@ -22,9 +28,14 @@ public:
     virtual void render() override;
     virtual void clean() override;
 
+    // 移动和视角相关
     void keyboardControl();
     void move(float dt);
     void syncCamera(float dt);
+
+    // 状态检查和切换
+    void updateState();
+    void changeState(bool is_moving);
 
     // 功能函数
     void updateDash(float dt);

@@ -15,13 +15,15 @@ void Player::init()
     auto sprite = SpriteAnim::addSpriteChild(this, game_.getConfig()->get<std::string>("player.texture", "assets/test/hp.png"));
     auto sprite_hp = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.textureHp", "assets/test/hp.png"));
     sprite->autoResize();
-    sprite_hp->setOffset(glm::vec2(sprite->getSize().x/2.0f - sprite_hp->getSize().x/2.0f, -sprite_hp->getSize().y/2.0f));
+    sprite_hp->setOffset(glm::vec2(sprite->getSize().x / 2.0f - sprite_hp->getSize().x / 2.0f, -sprite_hp->getSize().y / 2.0f));
     sprite->setOffset(glm::vec2(0, sprite->getSize().y));
-    SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.sprite_idle", "assets/sprite/ghost-idle.png"), 2.0f);
+    sprite_idle_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.sprite_idle", "assets/sprite/ghost-idle.png"), 2.0f);
+    //sprite_move_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("enemy.sprite_dead", "assets/sprite/ghostDead-Sheet.png"), 2.0f);
+    sprite_move_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.sprite_move", "assets/sprite/ghostDead-Sheet.png"), 2.0f);
+    sprite_move_->setActive(false);
+
     auto explosion_sprite = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("test.texture_explosion", "assets/sprite/ghost-idle.png"), 2.0f);
     explosion_sprite->setPlayMode(SpriteAnimPlayMode::PLAY_ONCE);
-
-    
 }
 
 void Player::handleEvents(SDL_Event &event)
@@ -34,10 +36,12 @@ void Player::update(float dt)
     Actor::update(dt);
     keyboardControl();
     velocity_ *= 0.9f;
-    if (glm::length(velocity_) < 0.1f) {
+    if (glm::length(velocity_) < 0.1f)
+    {
         velocity_ = glm::vec2(0, 0);
     }
     move(dt);
+    updateState();
     syncCamera(dt);
     updateDash(dt);
 }
@@ -114,6 +118,45 @@ void Player::syncCamera(float dt)
     auto new_camera_pos = current_camera_pos + (target_camera_pos - current_camera_pos) * smoothing_factor * dt; // 平滑移动摄像机
 
     game_.getCurrentScene()->setCameraPosition(new_camera_pos);
+}
+
+void Player::updateState()
+{
+    if (velocity_.x < 0)
+    {
+        sprite_move_->setFlip(true);
+        sprite_idle_->setFlip(true);
+    }
+    else
+    {
+        sprite_move_->setFlip(false);
+        sprite_idle_->setFlip(false);
+    }
+
+    bool new_is_moving = (glm::length(velocity_) > 0.1f);
+    if (new_is_moving != is_moving_)
+    {
+        is_moving_ = new_is_moving;
+        changeState(is_moving_);
+    }
+}
+
+void Player::changeState(bool is_moving)
+{
+    if (is_moving)
+    {
+        sprite_idle_->setActive(false);
+        sprite_move_->setActive(true);
+        sprite_move_->setCurrentFrame(sprite_idle_->getCurrentFrame());
+        sprite_move_->setFrameTimer(sprite_idle_->getFrameTimer());
+    }
+    else
+    {
+        sprite_idle_->setActive(true);
+        sprite_move_->setActive(false);
+        sprite_idle_->setCurrentFrame(sprite_move_->getCurrentFrame());
+        sprite_idle_->setFrameTimer(sprite_move_->getFrameTimer());
+    }
 }
 
 void Player::updateDash(float dt)
