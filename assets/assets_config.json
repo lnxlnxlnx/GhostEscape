@@ -16,7 +16,7 @@
     },
     "enemy": {
         "texture": "assets/test/enemy.png",
-        "sprite_move": "assets/sprite/ghost-move.png",
+        "sprite_move": "assets/sprite/ghost-Sheet.png",
         "sprite_dead": "assets/sprite/ghostDead-Sheet.png",
         "sprite_hurt": "assets/sprite/ghostHurt-Sheet.png",
         "speed": 100.0,
