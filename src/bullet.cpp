@@ -1,5 +1,7 @@
 #include "bullet.h"
 #include "core/config_manager.h"
+#include <glm/glm.hpp>
+#include "core/scene.h"
 Bullet *Bullet::addBulletChild(Actor *parent, const std::string &file_path, float scale)
 {
     Bullet *bullet = new Bullet();
@@ -23,4 +25,20 @@ void Bullet::update(float dt)
         return;
     }
     move(dt);
+}
+
+void Bullet::clean()
+{
+    if (sprite_ != nullptr)
+    {
+        sprite_->clean();
+        delete sprite_;
+        sprite_ = nullptr;
+    }
+}
+
+void Bullet::move(float dt)
+{
+    setPosition(position_ + velocity_ * dt);
+    position_ = glm::clamp(position_, glm::vec2(-100), game_.getCurrentScene()->getWorldSize() + glm::vec2(100, 100));
 }

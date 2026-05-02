@@ -17,10 +17,13 @@ public:
 
     void update(float dt) override ;
 
+    void clean() override;
     
     //getters and setters
     float getDamage() const { return damage; }
     void setDamage(float damage) { this->damage = damage; }
+
+    void move(float dt) override;
 };
 
 #endif /* F20D6098_BE6B_4F76_A0A2_638D345D3091 */
