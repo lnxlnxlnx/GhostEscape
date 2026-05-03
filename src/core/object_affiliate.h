@@ -26,7 +26,10 @@ public:
     void setOffset(const glm::vec2 &offset) { offset_ = offset; }
 
     void setOffsetByAnchor(Anchor anchor);
+
+    void setOffsetByComponent(Anchor selfAnchor, Anchor targetAnchor, ObjectAffiliate *referenceComponent);
     glm::vec2 getSize() const { return size_; }
+    glm::vec2 getAnchorOffset(Anchor anchor, const glm::vec2 &size);
     void setSize(const glm::vec2 &size);
 
     void setScale(float scale);

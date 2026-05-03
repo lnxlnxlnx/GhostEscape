@@ -16,13 +16,17 @@ void Player::init()
     // 加载玩家纹理
     auto sprite = SpriteAnim::addSpriteChild(this, game_.getConfig()->get<std::string>("player.texture", "assets/test/hp.png"));
     auto sprite_hp = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.textureHp", "assets/test/hp.png"));
+
+    
     sprite->autoResize();
     sprite_hp->setOffsetByAnchor(Anchor::TOP_CENTER);
-    sprite_hp->setOffset(sprite_hp->getOffset() + glm::vec2(0, -sprite->getSize().y ));
+    //sprite_hp->setOffset(sprite_hp->getOffset() + glm::vec2(0, -sprite->getSize().y ));
     sprite->setOffset(glm::vec2(- sprite->getSize().x / 2.0f, sprite->getSize().y / 2.0f));
     sprite_idle_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.sprite_idle", "assets/sprite/ghost-idle.png"), 2.0f);
     sprite_move_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.sprite_move", "assets/sprite/ghostDead-Sheet.png"), 2.0f);
     sprite_move_->setActive(false);
+
+    sprite_hp->setOffsetByComponent(Anchor::BOTTOM_CENTER, Anchor::TOP_CENTER, sprite_idle_);
 
     auto explosion_sprite = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("test.texture_explosion", "assets/sprite/ghost-idle.png"), 2.0f);
     explosion_sprite->setPlayMode(SpriteAnimPlayMode::PLAY_ONCE);
