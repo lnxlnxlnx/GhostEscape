@@ -43,6 +43,7 @@ void ObjectAffiliate::setOffsetByAnchor(Anchor anchor)
     }
 }
 
+//TODO: 核心还是坐标起点，一开始思路是对的，就是先设计一个setOffsetByPosition方法
 void ObjectAffiliate::setOffsetByComponent(Anchor selfAnchor, Anchor targetAnchor, ObjectAffiliate *referenceComponent)
 {
     if (!referenceComponent || !parent_)

@@ -20,6 +20,7 @@ void Enemy::init()
 
     // 碰撞体
     collider_ = Collider::addColliderChild(this, anim_normal_->getSize(), Collider::Type::CIRCLE);
+    stats_ = Stats::addStatsChild(this);
 }
 
 void Enemy::update(float dt)
@@ -80,13 +81,16 @@ void Enemy::updateState(float dt)
 {
 }
 
-// enemy.cpp
 void Enemy::attack()
 {
     if (!collider_ || target_->getCollider() == nullptr) return;
     if (collider_->isColliding(target_->getCollider())) {
         // TODO: attack
         SceneMain::solveImpulse(this, target_);
-        SDL_Log("Circle vs Circle");
+        if (stats_ != nullptr && target_ ->getStats() != nullptr && stats_->isAlive())
+        {
+            target_->takeDamage(stats_->getDamage());
+        }
+        //SDL_Log("Circle vs Circle");
     }
 }
