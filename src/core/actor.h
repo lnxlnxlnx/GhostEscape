@@ -5,7 +5,7 @@
 #define ACTOR_H
 
 #include "object_world.h"
-#include "../raw/sats.h"
+#include "../raw/stats.h"
 class Stats;
 class Actor : public ObjectWorld
 {
@@ -19,7 +19,7 @@ protected:
 
 public:
     virtual void move(float dt);
-    void takeDamage(float damage);
+    void takeDamage(float damage, const Stats *attacker);
     bool isAlive() const;
     // getters and setters
     glm::vec2 getVelocity() const { return velocity_; }

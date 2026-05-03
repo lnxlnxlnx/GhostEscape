@@ -198,6 +198,11 @@ void Game::init(std::string title, int width, int height)
     // 创建资源存储器
     asset_store_ = new AssetStore(renderer_, "assets/assets_config.json");
 
+    // 随机数生成器初始化
+    std::random_device rd;
+    rng_ = std::mt19937(rd());
+    dist_ = std::uniform_real_distribution<float>(0.0f, 1.0f);
+
     current_scene_ = new SceneMain();
     current_scene_->init();
 }

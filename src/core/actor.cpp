@@ -8,12 +8,14 @@ void Actor::move(float dt)
     position_ = glm::clamp(position_, glm::vec2(0), game_.getCurrentScene()->getWorldSize());
 }
 
-void Actor::takeDamage(float damage)
+void Actor::takeDamage(float damage, const Stats *attacker)
 {
-    if (stats_ != nullptr)
+    if (stats_ != nullptr && attacker != nullptr)
     {
-        stats_->takeDamage(damage);
+        stats_->takeDamagePro(damage, attacker);
+        return;
     }
+    stats_->takeDamage(damage);
 }
 
 bool Actor::isAlive() const

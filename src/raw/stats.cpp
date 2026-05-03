@@ -1,4 +1,4 @@
-#include "sats.h"
+#include "stats.h"
 
 Stats *Stats::addStatsChild(Actor *parent, float max_health, float max_mana, float damage, float mana_regen)
 {
@@ -67,16 +67,52 @@ void Stats::takeDamage(float damage)
 {
     if (is_invincible_ || !is_alive_)
         return;
+
     health_ -= damage;
     if (health_ <= 0)
     {
         health_ = 0;
         is_alive_ = false;
     }
-    // 受伤后进入无敌状态
-    #ifdef DEBUG_MODE
+// 受伤后进入无敌状态
+#ifdef DEBUG_MODE
     spdlog::info("Take Damage: {},current Health: {}", damage, health_);
-    #endif
+#endif
+    is_invincible_ = true;
+    invincible_timer_ = 0.0f;
+}
+
+void Stats::takeDamagePro(float damage, const Stats *attacker)
+{
+    if (is_invincible_ || !is_alive_)
+        return;
+    auto dist = game_.getDist();
+    auto rng = game_.getRng();
+    auto judge_miss = dist(rng) < getMissRate();
+    if (judge_miss)
+    {
+#ifdef DEBUG_MODE
+        spdlog::info("Attack Missed!");
+#endif
+        return;
+    }
+    auto is_crit = dist(rng) < attacker->getCritRate();
+    if (is_crit)    {
+        damage *= attacker->getCritDamage();
+#ifdef DEBUG_MODE
+        spdlog::info("Critical Hit! Crit Damage: {}", damage);
+#endif
+    }
+    health_ -= damage;
+    if (health_ <= 0)
+    {
+        health_ = 0;
+        is_alive_ = false;
+    }
+// 受伤后进入无敌状态
+#ifdef DEBUG_MODE
+    spdlog::info("Take Damage: {},current Health: {}", damage, health_);
+#endif
     is_invincible_ = true;
     invincible_timer_ = 0.0f;
 }

@@ -89,7 +89,7 @@ void Enemy::attack()
         SceneMain::solveImpulse(this, target_);
         if (stats_ != nullptr && target_ ->getStats() != nullptr && stats_->isAlive())
         {
-            target_->takeDamage(stats_->getDamage());
+            target_->takeDamage(stats_->getDamage(), stats_);
         }
         //SDL_Log("Circle vs Circle");
     }

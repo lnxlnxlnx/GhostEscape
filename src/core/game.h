@@ -6,6 +6,7 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include <glm/glm.hpp>
 #include <string>
+#include <random>
 
 class Scene; // 前向声明
 class AssetStore;
@@ -28,6 +29,10 @@ class Game
     Scene *current_scene_ = nullptr;
     AssetStore *asset_store_ = nullptr; // 资源管理器，NOTE: 如果不用指针就不能只是前向声明
 
+    // 随机数生成器
+    std::mt19937 rng_;
+    std::uniform_real_distribution<float> dist_;
+
     // 私有构造函数
     Game() {}
     // 禁止拷贝构造函数与赋值操作符
@@ -48,10 +53,14 @@ public:
     auto getScreenSize() const { return screen_size_; }
     auto getRenderer() const { return renderer_; }
     auto getCurrentScene() const { return current_scene_; }
+    auto getDist() { return dist_; }
+    auto getRng() { return rng_; }
+
     // void changeScene(Scene *new_scene);
     auto getAssetStore() { return asset_store_; }
 
     Config *getConfig();
+
     // 工具函数
     void drawGrid(const glm::vec2 &top_left, const glm::vec2 &botton_right, float grid_distance, SDL_FColor fcolor);      // 绘制网格
     void drawBoundary(const glm::vec2 &top_left, const glm::vec2 &botton_right, float boundary_width, SDL_FColor fcolor); // 绘制边界

@@ -17,7 +17,11 @@ protected:
     float damage_ = 40.0f;
     float mana_regen_ = 10.0f;
 
-    float invincible_time_ = 1.5f;      // 受伤后，无敌时间有多长
+    float crit_rate_ = 0.8f;
+    float crit_damage_ = 1.5f;
+    float miss_rate_ = 0.05f;
+
+    float invincible_time_ = 0.3f;      // 受伤后，无敌时间有多长
     float invincible_timer_ = 0.0f;     // 无敌计时器
     bool is_alive_ = true;
     bool is_invincible_ = false;
@@ -30,6 +34,7 @@ public:
     void useMana(float mana_cost);
     void regenMana(float dt);
     void takeDamage(float damage);
+    void takeDamagePro(float damage, const Stats *attacker);
 
     // getters and setters
     float getHealth() const { return health_; }
@@ -39,6 +44,13 @@ public:
     float getDamage() const { return damage_; }
     float getManaRegen() const { return mana_regen_; }
     bool isAlive() const { return is_alive_; }
+    float getCritRate() const { return crit_rate_; }
+    float getCritDamage() const { return crit_damage_; }
+    float getMissRate() const { return miss_rate_; }
+
+    void setCritRate(float crit_rate) { crit_rate_ = crit_rate; }
+    void setCritDamage(float crit_damage) { crit_damage_ = crit_damage; }
+    void setMissRate(float miss_rate) { miss_rate_ = miss_rate; }
     // ... 更多getter和setter方法
 };
 
