@@ -26,7 +26,10 @@ void Player::init()
     sprite_move_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.sprite_move", "assets/sprite/ghostDead-Sheet.png"), 2.0f);
     sprite_move_->setActive(false);
 
-    sprite_hp->setOffsetByComponent(Anchor::BOTTOM_CENTER, Anchor::TOP_CENTER, sprite_idle_);
+    sprite_hp->setOffsetByComponent(Anchor::BOTTOM_CENTER,Anchor::TOP_CENTER, sprite_idle_);
+    //sprite_hp->setOffsetByComponent(Anchor::TOP_CENTER,Anchor::BOTTOM_CENTER, sprite_idle_);
+    //sprite_hp->setOffsetByComponent(Anchor::TOP_CENTER,Anchor::CENTER, sprite_idle_);
+    //sprite_hp->setOffsetByComponent(Anchor::CENTER,Anchor::CENTER, sprite_idle_);
 
     auto explosion_sprite = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("test.texture_explosion", "assets/sprite/ghost-idle.png"), 2.0f);
     explosion_sprite->setPlayMode(SpriteAnimPlayMode::PLAY_ONCE);
