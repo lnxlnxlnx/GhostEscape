@@ -13,7 +13,7 @@ void SpriteAnim::updateAnimByPlayMode(float dt)
             break;
         case SpriteAnimPlayMode::PLAY_ONCE:
             current_frame_++;
-            if (current_frame_ == total_frames_ + 1)
+            if (current_frame_ == total_frames_)
             {
                 setFinished(true);
                 //setActive(false); // 播放完成后禁用对象
