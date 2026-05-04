@@ -17,10 +17,17 @@ protected:
     float damage_ = 40.0f;
     float mana_regen_ = 10.0f;
 
+    // 高级属性
     float crit_rate_ = 0.5f;
     float crit_damage_ = 1.5f;
     float miss_rate_ = 0.5f;
 
+    // 等级
+    uint8_t level_ = 1;
+    uint32_t current_exp_ = 0;
+    uint32_t exp_to_next_level_ = 100;
+
+    // 效果状态
     float invincible_time_ = 0.3f;      // 受伤后，无敌时间有多长
     float invincible_timer_ = 0.0f;     // 无敌计时器
     bool is_alive_ = true;
@@ -35,6 +42,7 @@ public:
     void regenMana(float dt);
     void takeDamage(float damage);
     void takeDamagePro(float damage, const Stats *attacker);
+    void levelUp();
 
     // getters and setters
     float getHealth() const { return health_; }

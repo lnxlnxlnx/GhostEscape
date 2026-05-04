@@ -13,11 +13,14 @@ void Player::init()
     max_speed_ = 500.0f;
     setMass(8.0f);
     stats_ = Stats::addStatsChild(this, 1000.0f, 100.0f, 10.0f, 5.0f);
+    for (int i = 0; i < 5; i++)
+    {
+        stats_->levelUp();
+    }
 
     // 加载玩家纹理
     auto sprite = SpriteAnim::addSpriteChild(this, game_.getConfig()->get<std::string>("player.texture", "assets/test/hp.png"));
     auto sprite_hp = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.textureHp", "assets/test/hp.png"));
-
     
     sprite->autoResize();
     sprite_hp->setOffsetByAnchor(Anchor::TOP_CENTER);

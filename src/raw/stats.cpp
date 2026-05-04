@@ -117,3 +117,20 @@ void Stats::takeDamagePro(float damage, const Stats *attacker)
     is_invincible_ = true;
     invincible_timer_ = 0.0f;
 }
+
+void Stats::levelUp()
+{
+    level_++;
+    current_exp_ = 0;
+    exp_to_next_level_ = sqrt(level_) * 100 + 50;  // 假设每级经验需求为当前等级乘以100
+
+    health_ += 50;
+    mana_ += 10;
+    damage_ += 5;
+    mana_regen_ += 1;
+    crit_rate_ += 0.1f;
+    crit_damage_ += 0.1f;
+    miss_rate_ += 0.05f;
+    spdlog::info("Level Up! Current Level: {}, Health: {}, Mana: {}, Damage: {}, Mana Regen: {}, Crit Rate: {}, Crit Damage: {}, Miss Rate: {}",
+                 level_, health_, mana_, damage_, mana_regen_, crit_rate_, crit_damage_, miss_rate_);
+}
