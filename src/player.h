@@ -8,7 +8,6 @@
 
 class SpriteAnim;
 class Collider;
-class Effect;
 class Player : public Actor
 {
 
@@ -25,9 +24,6 @@ class Player : public Actor
 
     // 碰撞体
     Collider *collider_ = nullptr;
-
-    // 特效
-    Effect *effect_ = nullptr;
 
 public:
     virtual void init() override;

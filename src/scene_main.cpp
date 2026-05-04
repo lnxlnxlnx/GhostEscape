@@ -3,6 +3,7 @@
 #include "core/asset_store.h"
 #include "enemy.h"
 #include "core/actor.h" // Ensure the Actor class is included
+#include "world/effect.h"
 
 void SceneMain::init()
 {
@@ -20,7 +21,9 @@ void SceneMain::init()
     enemy->init();
     enemy->set_target(player_);
     enemy->setPosition(world_size_ / 2.0f + glm::vec2(200.0f));
-    addChild(enemy);
+    //addChild(enemy);
+    Effect::addEffectChild(this, "assets/effect/184_3.png", enemy->getPosition(), 1.0f, enemy);
+    //addChild(effect);
 
     // 加载背景音乐
     game_.getAssetStore()->loadMusic(game_.getConfig()->get<std::string>("background_music"));

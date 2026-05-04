@@ -6,11 +6,15 @@
 
 #include "object_world.h"
 #include "../raw/stats.h"
+#include "../world/effect.h"
 class Stats;
+class Effect;
 class Actor : public ObjectWorld
 {
 protected:
     Stats *stats_ = nullptr;
+    // 特效
+    Effect *effect_ = nullptr;
 
     glm::vec2 velocity_ = glm::vec2(0, 0); // 速度
     float max_speed_ = 100.0f;             // 最大速度大小
