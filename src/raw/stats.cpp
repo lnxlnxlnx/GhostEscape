@@ -84,25 +84,22 @@ void Stats::takeDamage(float damage)
 
 void Stats::takeDamagePro(float damage, const Stats *attacker)
 {
+    #define DEBUG_MODE 1
     if (is_invincible_ || !is_alive_)
         return;
     float rand_val_miss = game_.getRandomFloat(0.0f, 1.0f);
     float rand_val_crit = game_.getRandomFloat(0.0f, 1.0f);
-    spdlog::info("Random Values - Miss: {}, Crit: {}", rand_val_miss, rand_val_crit);
+    //spdlog::info("Random Values - Miss: {}, Crit: {}", rand_val_miss, rand_val_crit);
     auto judge_miss = rand_val_miss < getMissRate();
     if (judge_miss)
     {
-#ifdef DEBUG_MODE
-        spdlog::info("Attack Missed!");
-#endif
+        //spdlog::info("Attack Missed!");
         return;
     }
     auto is_crit = rand_val_crit < attacker->getCritRate();
     if (is_crit)    {
         damage *= attacker->getCritDamage();
-#ifdef DEBUG_MODE
-        spdlog::info("Critical Hit! Crit Damage: {}", damage);
-#endif
+        //spdlog::info("Critical Hit! Crit Damage: {}", damage);
     }
     health_ -= damage;
     if (health_ <= 0)
@@ -111,9 +108,7 @@ void Stats::takeDamagePro(float damage, const Stats *attacker)
         is_alive_ = false;
     }
 // 受伤后进入无敌状态
-#ifdef DEBUG_MODE
-    spdlog::info("Take Damage: {},current Health: {}", damage, health_);
-#endif
+    //spdlog::info("Take Damage: {},current Health: {}", damage, health_);
     is_invincible_ = true;
     invincible_timer_ = 0.0f;
 }

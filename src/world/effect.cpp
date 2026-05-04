@@ -1,5 +1,6 @@
 #include "effect.h"
 #include "../affiliate/sprite_anim.h"
+#include "../core/scene.h"
 
 Effect *Effect::addEffectChild(Object *parent, const std::string &file_path, glm::vec2 pos, float scale, ObjectWorld *next_object)
 {
@@ -23,12 +24,17 @@ void Effect::update(float dt)
     checkFinish();
 }
 
+
 void Effect::checkFinish()
 {
     if (sprite_->isFinished())
     {
-        setNeedRemove(true);
-        if (next_object_ != nullptr) safeAddChild(next_object_);
+        need_remove_ = true;
+        is_active_ = false;
+        if (next_object_){
+            game_.getCurrentScene()->safeAddChild(next_object_);
+            spdlog::info("Effect::checkFinish()");
+        }
     }
 }
 
