@@ -53,8 +53,10 @@ public:
     auto getScreenSize() const { return screen_size_; }
     auto getRenderer() const { return renderer_; }
     auto getCurrentScene() const { return current_scene_; }
-    auto getDist() { return dist_; }
-    auto getRng() { return rng_; }
+    auto& getDist() { return dist_; }
+    auto& getRng() { return rng_; }
+
+    float getRandomFloat(float min, float max);
 
     // void changeScene(Scene *new_scene);
     auto getAssetStore() { return asset_store_; }

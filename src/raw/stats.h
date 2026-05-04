@@ -17,9 +17,9 @@ protected:
     float damage_ = 40.0f;
     float mana_regen_ = 10.0f;
 
-    float crit_rate_ = 0.8f;
+    float crit_rate_ = 0.5f;
     float crit_damage_ = 1.5f;
-    float miss_rate_ = 0.05f;
+    float miss_rate_ = 0.5f;
 
     float invincible_time_ = 0.3f;      // 受伤后，无敌时间有多长
     float invincible_timer_ = 0.0f;     // 无敌计时器
@@ -47,7 +47,6 @@ public:
     float getCritRate() const { return crit_rate_; }
     float getCritDamage() const { return crit_damage_; }
     float getMissRate() const { return miss_rate_; }
-
     void setCritRate(float crit_rate) { crit_rate_ = crit_rate; }
     void setCritDamage(float crit_damage) { crit_damage_ = crit_damage; }
     void setMissRate(float miss_rate) { miss_rate_ = miss_rate; }

@@ -58,6 +58,16 @@ bool Game::setFPS(Uint64 fps)
     return true;
 }
 
+float Game::getRandomFloat(float min, float max)
+{
+    if (min <= max)
+    {
+        return dist_(rng_) * (max - min) + min;
+    }
+    spdlog::warn("生成的随机数超出范围，将返回0.0f");
+    return 0.0f;
+}
+
 Config *Game::getConfig()
 {
     return asset_store_->getConfig();

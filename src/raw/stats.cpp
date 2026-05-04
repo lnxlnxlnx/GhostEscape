@@ -86,9 +86,10 @@ void Stats::takeDamagePro(float damage, const Stats *attacker)
 {
     if (is_invincible_ || !is_alive_)
         return;
-    auto dist = game_.getDist();
-    auto rng = game_.getRng();
-    auto judge_miss = dist(rng) < getMissRate();
+    float rand_val_miss = game_.getRandomFloat(0.0f, 1.0f);
+    float rand_val_crit = game_.getRandomFloat(0.0f, 1.0f);
+    spdlog::info("Random Values - Miss: {}, Crit: {}", rand_val_miss, rand_val_crit);
+    auto judge_miss = rand_val_miss < getMissRate();
     if (judge_miss)
     {
 #ifdef DEBUG_MODE
@@ -96,7 +97,7 @@ void Stats::takeDamagePro(float damage, const Stats *attacker)
 #endif
         return;
     }
-    auto is_crit = dist(rng) < attacker->getCritRate();
+    auto is_crit = rand_val_crit < attacker->getCritRate();
     if (is_crit)    {
         damage *= attacker->getCritDamage();
 #ifdef DEBUG_MODE
