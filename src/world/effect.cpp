@@ -28,7 +28,7 @@ void Effect::checkFinish()
     if (sprite_->isFinished())
     {
         setNeedRemove(true);
-        safeAddChild(next_object_);
+        if (next_object_ != nullptr) safeAddChild(next_object_);
     }
 }
 
