@@ -51,7 +51,7 @@ public:
     float getMaxMana() const { return max_mana_; }
     float getDamage() const { return damage_; }
     float getManaRegen() const { return mana_regen_; }
-    bool isAlive() const { return is_alive_; }
+    bool getIsAlive() const { return is_alive_; }
     float getCritRate() const { return crit_rate_; }
     float getCritDamage() const { return crit_damage_; }
     float getMissRate() const { return miss_rate_; }

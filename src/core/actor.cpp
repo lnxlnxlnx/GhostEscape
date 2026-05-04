@@ -18,7 +18,7 @@ void Actor::takeDamage(float damage, const Stats *attacker)
     stats_->takeDamage(damage);
 }
 
-bool Actor::isAlive() const
+bool Actor::getIsAlive() const
 {
-    return stats_ != nullptr && stats_->isAlive();
+    return stats_ != nullptr && stats_->getIsAlive();
 }

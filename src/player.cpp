@@ -6,13 +6,14 @@
 #include "affiliate/sprite_anim.h"
 #include <spdlog/spdlog.h>
 #include "affiliate/collider.h"
+#include "world/effect.h"
 
 void Player::init()
 {
     Actor::init();
     max_speed_ = 500.0f;
     setMass(8.0f);
-    stats_ = Stats::addStatsChild(this, 1000.0f, 100.0f, 10.0f, 5.0f);
+    stats_ = Stats::addStatsChild(this, 10.0f, 100.0f, 10.0f, 5.0f);
     for (int i = 0; i < 5; i++)
     {
         stats_->levelUp();
@@ -29,17 +30,15 @@ void Player::init()
     sprite_idle_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.sprite_idle", "assets/sprite/ghost-idle.png"), 2.0f);
     sprite_move_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("player.sprite_move", "assets/sprite/ghostDead-Sheet.png"), 2.0f);
     sprite_move_->setActive(false);
-
     sprite_hp->setOffsetByComponent(Anchor::BOTTOM_CENTER,Anchor::TOP_CENTER, sprite_idle_);
-    //sprite_hp->setOffsetByComponent(Anchor::TOP_CENTER,Anchor::BOTTOM_CENTER, sprite_idle_);
-    //sprite_hp->setOffsetByComponent(Anchor::TOP_CENTER,Anchor::CENTER, sprite_idle_);
-    //sprite_hp->setOffsetByComponent(Anchor::CENTER,Anchor::CENTER, sprite_idle_);
-
     auto explosion_sprite = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("test.texture_explosion", "assets/sprite/ghost-idle.png"), 2.0f);
     explosion_sprite->setPlayMode(SpriteAnimPlayMode::PLAY_ONCE);
 
     // 碰撞体
     collider_ = Collider::addColliderChild(this, sprite_idle_->getSize()/2.0f, Collider::Type::CIRCLE);
+
+    // 特效
+    effect_ = Effect::addEffectChild(nullptr, "assets/effect/1764.png", glm::vec2(0), 2.0f);
 }
 
 void Player::handleEvents(SDL_Event &event)
@@ -60,6 +59,7 @@ void Player::update(float dt)
     updateState();
     syncCamera(dt);
     updateDash(dt);
+    checkIsDead();
 }
 
 void Player::render()
@@ -196,5 +196,14 @@ void Player::updateDash(float dt)
         {
             dash_cool_down = 0.0f;
         }
+    }
+}
+
+void Player::checkIsDead()
+{
+    if (!stats_->getIsAlive()){
+        game_.getCurrentScene()->safeAddChild(effect_);
+        effect_->setPosition(getPosition());
+        setActive(false);
     }
 }

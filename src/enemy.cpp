@@ -19,15 +19,18 @@ void Enemy::init()
     current_anim_ = anim_normal_;
 
     // 碰撞体
-    collider_ = Collider::addColliderChild(this, anim_normal_->getSize(), Collider::Type::CIRCLE);
+    collider_ = Collider::addColliderChild(this, anim_normal_->getSize() * glm::vec2(1.5f, 1.5f), Collider::Type::CIRCLE);
     stats_ = Stats::addStatsChild(this);
 }
 
 void Enemy::update(float dt)
 {
     Actor::update(dt);
-    aim_target(target_);
-    move(dt);
+    if (target_ != nullptr) 
+    {
+        aim_target(target_);
+        move(dt);
+    }
     timer_ += dt;
     if (timer_ > 2.0f && timer_ < 4.0f)
     {
@@ -83,11 +86,11 @@ void Enemy::updateState(float dt)
 
 void Enemy::attack()
 {
-    if (!collider_ || target_->getCollider() == nullptr) return;
+    if (!collider_ || target_ == nullptr || target_->getCollider() == nullptr) return;
     if (collider_->isColliding(target_->getCollider())) {
         // TODO: attack
         SceneMain::solveImpulse(this, target_);
-        if (stats_ != nullptr && target_ ->getStats() != nullptr && stats_->isAlive())
+        if (stats_ != nullptr && target_ ->getStats() != nullptr && stats_->getIsAlive())
         {
             target_->takeDamage(stats_->getDamage(), stats_);
         }

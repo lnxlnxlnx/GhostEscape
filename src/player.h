@@ -8,6 +8,7 @@
 
 class SpriteAnim;
 class Collider;
+class Effect;
 class Player : public Actor
 {
 
@@ -24,6 +25,9 @@ class Player : public Actor
 
     // 碰撞体
     Collider *collider_ = nullptr;
+
+    // 特效
+    Effect *effect_ = nullptr;
 
 public:
     virtual void init() override;
@@ -43,8 +47,9 @@ public:
 
     // 功能函数
     void updateDash(float dt);
+    void checkIsDead();
 
-    // 获取属性
+    // getters and setters
     Collider *getCollider() const { return collider_; }
     void setCollider(Collider *collider) { collider_ = collider; }
 

@@ -20,7 +20,7 @@ protected:
 public:
     virtual void move(float dt);
     void takeDamage(float damage, const Stats *attacker);
-    bool isAlive() const;
+    bool getIsAlive() const;
     // getters and setters
     glm::vec2 getVelocity() const { return velocity_; }
     void setVelocity(const glm::vec2 &velocity) { velocity_ = velocity; }

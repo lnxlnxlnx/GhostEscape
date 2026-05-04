@@ -8,12 +8,18 @@ void Object::handleEvents(SDL_Event& event) {
 }
 
 void Object::update(float dt) {
+    for (auto &child : object_to_add_){
+        addChild(child);
+        child = nullptr;
+    }
+    object_to_add_.clear();
     for (auto it = children_.begin(); it != children_.end();) {
         auto child = *it;
         if (child->getNeedRemove()) {
             it = children_.erase(it);
             child->clean();
             delete child;
+            child = nullptr;
             continue;
         }
         ++it;
@@ -37,4 +43,9 @@ void Object::clean() {
         child->clean();
     }
     children_.clear();
+}
+
+void Object::removeChild(Object *child)
+{
+    children_.erase(std::remove(children_.begin(), children_.end(), child), children_.end());
 }

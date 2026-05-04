@@ -47,6 +47,7 @@ add_executable(${TARGET} src/main.cpp
     src/affiliate/collider.cpp
     src/affiliate/physics_body.cpp
     src/raw/stats.cpp
+    src/world/effect.cpp
     # src/asset_manager.cpp
     )
 
