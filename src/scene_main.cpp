@@ -4,6 +4,7 @@
 #include "enemy.h"
 #include "core/actor.h" // Ensure the Actor class is included
 #include "world/effect.h"
+#include "spawner.h"
 
 void SceneMain::init()
 {
@@ -17,12 +18,10 @@ void SceneMain::init()
     addChild(player_);
 
     // 创建敌人
-    auto enemy = new Enemy();
-    enemy->init();
-    enemy->set_target(player_);
-    enemy->setPosition(world_size_ / 2.0f + glm::vec2(200.0f));
-    addChild(enemy);
-    Effect::addEffectChild(this, "assets/effect/184_3.png", enemy->getPosition(), 1.0f, enemy);
+    spawner_ = new Spawner();
+    spawner_->init();
+    spawner_->setTarget(player_);
+    addChild(spawner_);
     //addChild(effect);
 
     // 加载背景音乐

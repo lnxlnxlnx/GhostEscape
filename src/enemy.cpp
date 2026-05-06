@@ -6,9 +6,22 @@
 #include "affiliate/collider.h"
 #include "scene_main.h"
 
+Enemy *Enemy::addEnemyChild(Object *parent, glm::vec2 pos, Player *target)
+{
+    Enemy *enemy = new Enemy();
+    enemy->setPosition(pos);
+    enemy->aim_target(target);
+    if (parent != nullptr)
+    {
+        parent->addChild(enemy);
+    }
+    return enemy;
+}
+
 void Enemy::init()
 {
     Actor::init();
+    spdlog::info("Enemy init");
     anim_normal_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("enemy.sprite_move"), 2.0f);
     anim_hurt_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("enemy.sprite_hurt"), 2.0f);
     anim_die_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("enemy.sprite_dead"), 2.0f);

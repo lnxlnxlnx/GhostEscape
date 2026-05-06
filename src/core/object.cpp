@@ -17,6 +17,7 @@ void Object::update(float dt)
         // child = nullptr;
     }
     object_to_add_.clear();
+    
     for (auto it = children_.begin(); it != children_.end();)
     {
         auto child = *it;

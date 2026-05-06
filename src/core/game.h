@@ -56,7 +56,7 @@ public:
     auto& getDist() { return dist_; }
     auto& getRng() { return rng_; }
 
-    float getRandomFloat(float min, float max);
+    float getRandomFloat(float min, float max);         // NOTE:未来不再使用这个函数，改用下面的randomFloat成员函数
 
     // void changeScene(Scene *new_scene);
     auto getAssetStore() { return asset_store_; }
@@ -68,6 +68,12 @@ public:
     void drawBoundary(const glm::vec2 &top_left, const glm::vec2 &botton_right, float boundary_width, SDL_FColor fcolor); // 绘制边界
     void renderTexture(const Texture &texture, const glm::vec2 &position, const glm::vec2 &size);
     void renderFillCircle(const glm::vec2 &position, const glm::vec2 &size, float alpha);
+
+        // 随机数函数
+    float randomFloat(float min, float max) { return std::uniform_real_distribution<float>(min, max)(rng_); }
+    int randomInt(int min, int max) { return std::uniform_int_distribution<int>(min, max)(rng_); }
+    glm::vec2 randomVec2(const glm::vec2& min, const glm::vec2& max) { return glm::vec2(randomFloat(min.x, max.x), randomFloat(min.y, max.y)); }
+    glm::ivec2 randomIVec2(const glm::ivec2& min, const glm::ivec2& max) { return glm::ivec2(randomInt(min.x, max.x), randomInt(min.y, max.y)); }
 
     void run();                                          // 运行游戏, 执行游戏主循环
     void init(std::string title, int width, int height); // 初始化游戏

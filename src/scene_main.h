@@ -4,6 +4,7 @@
 
 class Player;
 class Actor;
+class Spawner;
 class SceneMain: public Scene
 {
     // 相机振动
@@ -13,6 +14,8 @@ class SceneMain: public Scene
 
     // 玩家
     Player* player_ = nullptr; // 玩家
+    // 敌人生成器
+    Spawner* spawner_ = nullptr;
 
 
 public:
