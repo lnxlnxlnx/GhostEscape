@@ -20,6 +20,7 @@ Enemy *Enemy::addEnemyChild(Object *parent, glm::vec2 pos, Player *target)
 
 void Enemy::init()
 {
+    spdlog::set_level(spdlog::level::debug);
     Actor::init();
     spdlog::info("Enemy init");
     anim_normal_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("enemy.sprite_move"), 2.0f);
@@ -34,6 +35,8 @@ void Enemy::init()
     // 碰撞体
     collider_ = Collider::addColliderChild(this, anim_normal_->getSize() * glm::vec2(1.5f, 1.5f), Collider::Type::CIRCLE);
     stats_ = Stats::addStatsChild(this);
+
+    spdlog::info("Enemy init end");
 }
 
 void Enemy::update(float dt)

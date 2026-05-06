@@ -27,6 +27,7 @@ public:
     static Sprite *addSpriteChild(ObjectScreen *parent, const std::string &file_path, float scale = 1.0f, Anchor anchor = Anchor::CENTER);
 
     virtual void render() override;
+    virtual void clean() override;
 
     // getters and setters
     Texture getTexture() const { return texture_; }

@@ -28,6 +28,7 @@ Sprite *Sprite::addSpriteChild(ObjectScreen *parent, const std::string &file_pat
 // sprite.cpp
 void Sprite::render()
 {
+    ObjectAffiliate::render();
     if (texture_.texture == nullptr)
     {
         return;
@@ -38,6 +39,11 @@ void Sprite::render()
     }
     auto pos = parent_->getRenderPosition() + offset_;
     game_.renderTexture(texture_, pos, size_);
+}
+
+void Sprite::clean()
+{
+    ObjectAffiliate::clean();
 }
 
 void Sprite::setTexture(const Texture &texture)

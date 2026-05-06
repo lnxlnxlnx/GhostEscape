@@ -6,6 +6,26 @@ void ObjectAffiliate::autoResize()
     size_ = Game::GetInstance().getConfig()->get<glm::vec2>("player.size", glm::vec2(32.0f, 32.0f));
 }
 
+void ObjectAffiliate::init()
+{
+    Object::init();
+}
+
+void ObjectAffiliate::render()
+{
+    Object::render();
+}
+
+void ObjectAffiliate::update(float dt)
+{
+    Object::update(dt);
+}
+
+void ObjectAffiliate::clean()
+{
+    Object::clean();
+}
+
 void ObjectAffiliate::setOffsetByAnchor(Anchor anchor)
 {
     anchor_ = anchor;

@@ -39,7 +39,7 @@ public:
     bool getNeedRemove() const { return need_remove_; }
 
     // children
-    void safeAddChild(Object *child) { object_to_add_.push_back(child); }
+    void safeAddChild(Object *child);
     virtual void addChild(Object *child) { children_.push_back(child); }
     virtual void removeChild(Object *child);
 };

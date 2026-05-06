@@ -19,6 +19,11 @@ public:
 
     void autoResize();
 
+    virtual void init() override;
+    virtual void render() override;
+    virtual void update(float dt) override;
+    virtual void clean() override;
+
     // getters and setters
     ObjectScreen *getParent() const { return parent_; }
     void setParent(ObjectScreen *parent) { parent_ = parent; }

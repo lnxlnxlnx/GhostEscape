@@ -10,7 +10,14 @@ Effect *Effect::addEffectChild(Object *parent, const std::string &file_path, glm
     sprite->setPlayMode(SpriteAnimPlayMode::PLAY_ONCE);
     effect->setSpriteAnim(sprite);
     effect->setPosition(pos);
-    effect->setNextObject(next_object);
+    if (next_object == nullptr)
+    {
+        spdlog::info("Effect::addEffectChild() no next_object");
+    }
+    else
+    {
+        effect->setNextObject(next_object);
+    }
     if (parent != nullptr)
     {
         parent->addChild(effect);
@@ -30,7 +37,7 @@ void Effect::checkFinish()
     if (sprite_->isFinished())
     {
         need_remove_ = true;
-        is_active_ = false;
+        //is_active_ = false;
         // sprite_->setFinished(false); // 重置动画状态，以防再次进入这个函数
         if (next_object_){
             game_.getCurrentScene()->safeAddChild(next_object_);
