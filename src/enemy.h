@@ -47,7 +47,7 @@ public:
 
     // getters and setters
     Player *get_target() { return target_; }
-    void set_target(Player *target) { target_ = target; }
+    void setTarget(Player *target) { target_ = target; }
     Collider *getCollider() const { return collider_; }
     void setCollider(Collider *collider) { collider_ = collider; }
 };

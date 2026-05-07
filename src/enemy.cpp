@@ -11,7 +11,7 @@ Enemy *Enemy::addEnemyChild(Object *parent, glm::vec2 pos, Player *target)
     Enemy *enemy = new Enemy();
     enemy->init();
     enemy->setPosition(pos);
-    enemy->aim_target(target);
+    enemy->setTarget(target);
     if (parent != nullptr)
     {
         parent->addChild(enemy);

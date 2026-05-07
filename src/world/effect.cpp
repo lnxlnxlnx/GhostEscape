@@ -37,13 +37,14 @@ void Effect::clean()
     if (sprite_ != nullptr)
     {
         sprite_->clean();
-        delete sprite_;
-        sprite_ = nullptr;
+        //delete sprite_;
+        //sprite_ = nullptr;
     }
 }
 
 void Effect::checkFinish()
 {
+    if (!sprite_) return;
     if (sprite_->isFinished())
     {
         need_remove_ = true;
