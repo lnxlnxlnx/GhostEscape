@@ -23,7 +23,7 @@ void Enemy::init()
 {
     spdlog::set_level(spdlog::level::debug);
     Actor::init();
-    spdlog::info("Enemy init");
+    // spdlog::info("Enemy init");
     anim_normal_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("enemy.sprite_move"), 2.0f);
     anim_hurt_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("enemy.sprite_hurt"), 2.0f);
     anim_die_ = SpriteAnim::addSpriteAnimChild(this, game_.getConfig()->get<std::string>("enemy.sprite_dead"), 2.0f);
@@ -37,14 +37,15 @@ void Enemy::init()
     collider_ = Collider::addColliderChild(this, anim_normal_->getSize() * glm::vec2(1.5f, 1.5f), Collider::Type::CIRCLE);
     stats_ = Stats::addStatsChild(this);
 
-    spdlog::info("Enemy init end");
+    // spdlog::info("Enemy init end");
 }
 
 void Enemy::update(float dt)
 {
-    //if (!this) return;
+    // if (!this) return;
     Actor::update(dt);
-    if (target_ != nullptr) 
+    static bool can_shoot = true;
+    if (target_ != nullptr)
     {
         aim_target(target_);
         move(dt);
@@ -57,11 +58,17 @@ void Enemy::update(float dt)
     else if (timer_ > 4.0f)
     {
         changeState(State::DIE);
-        //Bullet::addBulletChild(this, game_.getConfig()->get<std::string>("bullet.texture", "assets/test/hp.png"), 1.0f);
+        if (can_shoot)
+        {
+            Bullet::addBulletChild(this, game_.getConfig()->get<std::string>("bullet.texture", "assets/test/hp.png"), 1.0f);
+            can_shoot = false;
+        }
     }
-    if (timer_ > 6.0f){
+    if (timer_ > 6.0f)
+    {
         timer_ = 0.0f;
         changeState(State::NORMAL);
+        can_shoot = true;
     }
     attack();
 }
@@ -70,7 +77,7 @@ void Enemy::aim_target(Player *target)
 {
     if (target == nullptr)
         return;
-    //spdlog::debug("this ptr: {}, target ptr: {}", static_cast<void*>(this), static_cast<void*>(target));
+    // spdlog::debug("this ptr: {}, target ptr: {}", static_cast<void*>(this), static_cast<void*>(target));
     auto direction = target->getPosition() - this->getPosition();
     direction = glm::normalize(direction);
     velocity_ = direction * max_speed_;
@@ -78,7 +85,7 @@ void Enemy::aim_target(Player *target)
 
 void Enemy::changeState(State new_state)
 {
-    //spdlog::debug("this ptr: {}, new_state: {}", static_cast<void*>(this), static_cast<int>(new_state));
+    // spdlog::debug("this ptr: {}, new_state: {}", static_cast<void*>(this), static_cast<int>(new_state));
     if (new_state == current_state_)
         return;
     current_anim_->setActive(false);
@@ -106,14 +113,16 @@ void Enemy::updateState(float dt)
 
 void Enemy::attack()
 {
-    if (!collider_ || target_ == nullptr || target_->getCollider() == nullptr) return;
-    if (collider_->isColliding(target_->getCollider())) {
+    if (!collider_ || target_ == nullptr || target_->getCollider() == nullptr)
+        return;
+    if (collider_->isColliding(target_->getCollider()))
+    {
         // TODO: attack
         SceneMain::solveImpulse(this, target_);
-        if (stats_ != nullptr && target_ ->getStats() != nullptr && stats_->getIsAlive())
+        if (stats_ != nullptr && target_->getStats() != nullptr && stats_->getIsAlive())
         {
             target_->takeDamage(stats_->getDamage(), stats_);
         }
-        //SDL_Log("Circle vs Circle");
+        // SDL_Log("Circle vs Circle");
     }
 }
