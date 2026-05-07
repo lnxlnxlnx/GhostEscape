@@ -41,6 +41,7 @@ void Enemy::init()
 
 void Enemy::update(float dt)
 {
+    if (this == nullptr) return;
     Actor::update(dt);
     if (target_ != nullptr) 
     {
@@ -75,6 +76,8 @@ void Enemy::aim_target(Player *target)
 
 void Enemy::changeState(State new_state)
 {
+    spdlog::debug("this ptr: {}, new_state: {}", static_cast<void*>(this), static_cast<int>(new_state));
+    if (this == nullptr) return;
     if (new_state == current_state_)
         return;
     current_anim_->setActive(false);
