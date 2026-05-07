@@ -18,12 +18,14 @@ void SceneMain::init()
     addChild(player_);
 
     // 创建敌人
-    Effect::addEffectChild(this, "assets/effect/184_3.png", world_size_ / 2.0f + glm::vec2(100.0f, 0), 1.0f, Enemy::addEnemyChild(nullptr, world_size_ / 2.0f + glm::vec2(100.0f, 0), player_));
+    //Effect::addEffectChild(this, "assets/effect/184_3.png", world_size_ / 2.0f + glm::vec2(100.0f, 0), 1.0f, Enemy::addEnemyChild(nullptr, world_size_ / 2.0f + glm::vec2(100.0f, 0), player_));
 
-    // spawner_ = new Spawner();
-    // spawner_->init();
-    // spawner_->setTarget(player_);
-    // addChild(spawner_);
+    //Enemy::addEnemyChild(this, world_size_ / 2.0f + glm::vec2(100.0f, 0), player_);
+
+    spawner_ = new Spawner();
+    spawner_->init();
+    spawner_->setTarget(player_);
+    addChild(spawner_);
     //addChild(effect);
 
     // 加载背景音乐
