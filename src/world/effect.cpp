@@ -31,6 +31,16 @@ void Effect::update(float dt)
     checkFinish();
 }
 
+void Effect::clean()
+{
+    ObjectWorld::clean();
+    if (sprite_ != nullptr)
+    {
+        sprite_->clean();
+        delete sprite_;
+        sprite_ = nullptr;
+    }
+}
 
 void Effect::checkFinish()
 {
@@ -39,9 +49,9 @@ void Effect::checkFinish()
         need_remove_ = true;
         //is_active_ = false;
         // sprite_->setFinished(false); // 重置动画状态，以防再次进入这个函数
-        if (next_object_){
+        if (next_object_ != nullptr){
             game_.getCurrentScene()->safeAddChild(next_object_);
-            spdlog::info("Effect::checkFinish()");
+            //spdlog::info("Effect::checkFinish()");
         }
     }
 }

@@ -9,6 +9,7 @@
 Enemy *Enemy::addEnemyChild(Object *parent, glm::vec2 pos, Player *target)
 {
     Enemy *enemy = new Enemy();
+    enemy->init();
     enemy->setPosition(pos);
     enemy->aim_target(target);
     if (parent != nullptr)
@@ -41,7 +42,7 @@ void Enemy::init()
 
 void Enemy::update(float dt)
 {
-    if (this == nullptr) return;
+    if (!this) return;
     Actor::update(dt);
     if (target_ != nullptr) 
     {
@@ -56,7 +57,7 @@ void Enemy::update(float dt)
     else if (timer_ > 4.0f)
     {
         changeState(State::DIE);
-        Bullet::addBulletChild(this, game_.getConfig()->get<std::string>("bullet.texture", "assets/test/hp.png"), 1.0f);
+        //Bullet::addBulletChild(this, game_.getConfig()->get<std::string>("bullet.texture", "assets/test/hp.png"), 1.0f);
     }
     if (timer_ > 6.0f){
         timer_ = 0.0f;
@@ -69,6 +70,7 @@ void Enemy::aim_target(Player *target)
 {
     if (target == nullptr)
         return;
+    //spdlog::debug("this ptr: {}, target ptr: {}", static_cast<void*>(this), static_cast<void*>(target));
     auto direction = target->getPosition() - this->getPosition();
     direction = glm::normalize(direction);
     velocity_ = direction * max_speed_;
@@ -76,8 +78,7 @@ void Enemy::aim_target(Player *target)
 
 void Enemy::changeState(State new_state)
 {
-    spdlog::debug("this ptr: {}, new_state: {}", static_cast<void*>(this), static_cast<int>(new_state));
-    if (this == nullptr) return;
+    //spdlog::debug("this ptr: {}, new_state: {}", static_cast<void*>(this), static_cast<int>(new_state));
     if (new_state == current_state_)
         return;
     current_anim_->setActive(false);

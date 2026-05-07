@@ -25,7 +25,7 @@ void Object::update(float dt)
         {
             it = children_.erase(it);
             child->clean();
-            delete child;
+            //delete child;
             child = nullptr;
             continue;
         }
@@ -54,6 +54,8 @@ void Object::clean()
     for (auto &child : children_)
     {
         child->clean();
+        delete child;
+        child = nullptr;
     }
     children_.clear();
 }
@@ -62,11 +64,12 @@ void Object::safeAddChild(Object *child)
 {
     if (child == nullptr)
         return;
-    spdlog::debug("safeAddChild: {}", static_cast<int>(child->getType()));
+    //spdlog::debug("safeAddChild: {}", static_cast<int>(child->getType()));
     object_to_add_.push_back(child);
 }
 
 void Object::removeChild(Object *child)
 {
+    if (!child) return;
     children_.erase(std::remove(children_.begin(), children_.end(), child), children_.end());
 }

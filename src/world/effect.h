@@ -23,6 +23,8 @@ public:
     void setNextObject(ObjectWorld* next_object) { next_object_ = next_object; }
     ObjectWorld* getNextObject() { return next_object_; }
 
+    virtual void clean() override;
+
 private:
     void checkFinish();
 };

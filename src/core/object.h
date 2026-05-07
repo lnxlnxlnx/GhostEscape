@@ -30,9 +30,7 @@ public:
     ObjectType getType() const { return type_; }
     void setType(ObjectType type) { type_ = type; }
     bool isActive() const { return is_active_; }
-    void setActive(bool active) { 
-        if (this == nullptr) return;
-        is_active_ = active; }
+    void setActive(bool active) { is_active_ = active; }
     bool isPaused() const { return is_paused_; }
     void setPaused(bool paused) { is_paused_ = paused; }
 
