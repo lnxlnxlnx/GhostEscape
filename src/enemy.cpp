@@ -42,7 +42,7 @@ void Enemy::init()
 
 void Enemy::update(float dt)
 {
-    if (!this) return;
+    //if (!this) return;
     Actor::update(dt);
     if (target_ != nullptr) 
     {

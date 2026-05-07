@@ -4,6 +4,7 @@
 
 void Actor::move(float dt)
 {
+    velocity_ = glm::clamp(velocity_, -max_speed_, max_speed_);
     setPosition(position_ + velocity_ * dt);
     position_ = glm::clamp(position_, glm::vec2(0), game_.getCurrentScene()->getWorldSize());
 }
