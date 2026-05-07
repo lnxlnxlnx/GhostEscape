@@ -114,8 +114,8 @@ void Game::renderTexture(const Texture &texture, const glm::vec2 &position, cons
     auto camera_zoom = current_scene_->getCameraZoom();
     // 视口裁剪：计算对象在屏幕上的位置
     auto world_pos = getCurrentScene()->screenToWorld(position);
-    glm::vec2 screen_pos = (world_pos - camera_pos) * camera_zoom;
-    glm::vec2 screen_size = size * camera_zoom;
+    glm::vec2 screen_pos = (world_pos - camera_pos) / camera_zoom;
+    glm::vec2 screen_size = size / camera_zoom;
     
     // 检查是否在屏幕范围内（简单的AABB裁剪）
     if (screen_pos.x + screen_size.x < 0 || screen_pos.x > screen_size_.x ||

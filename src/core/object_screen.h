@@ -13,7 +13,7 @@ protected:
 
 public:
     // getters and stters
-    glm::vec2 getRenderPosition() const { return render_position_; }
+    glm::vec2 getRenderPosition() const;
     glm::vec2 getPosition() const { return render_position_; } // 对于屏幕对象，世界位置和渲染位置是一样的
     virtual void setRenderPosition(const glm::vec2 &render_position) { render_position_ = render_position; }
     virtual void init() override{ type_ = ObjectType::OBJECT_SCREEN; }
